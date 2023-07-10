@@ -5,7 +5,7 @@ from datetime import datetime, time
 import matplotlib.dates as mdates
 
 # Load data
-data = pd.read_csv('C:\\Users\\alfea\\Downloads\\Kota Jogja 2020_01-12.csv')
+data = pd.read_csv('Kota Jogja 2020_01-12.csv')
 data['Waktu'] = pd.to_datetime(data['Waktu'])
 
 option = st.sidebar.selectbox('Select Option', ('Correlation', 'ISPU', 'Download', 'Data Analyst', 'Camera'))
@@ -84,7 +84,7 @@ elif option == 'ISPU':
     import streamlit as st
     import matplotlib.pyplot as plt
 
-    data = pd.read_csv('C:\\Users\\alfea\\Downloads\\Kota Jogja 2020_01-12.csv')
+    data = pd.read_csv('Kota Jogja 2020_01-12.csv')
     data['Waktu'] = pd.to_datetime(data['Waktu'])
 
     option = st.radio("Select ISPU Calculation Option:", ('Manual Input', 'From Data'))
@@ -195,7 +195,7 @@ elif option == 'Download':
     from datetime import datetime
 
     # Load data from CSV file
-    data = pd.read_csv('C:\\Users\\alfea\\Downloads\\Kota Jogja 2020_01-12.csv')
+    data = pd.read_csv('Kota Jogja 2020_01-12.csv')
     data['Waktu'] = pd.to_datetime(data['Waktu'])
 
     # Sidebar options
