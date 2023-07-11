@@ -35,12 +35,12 @@ if option == 'Correlation':
     # Filter data based on selected date and time range
     filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)]
 
-    # Create line plots for pollutants and meteorology data using Plotly
+    # Create line plot for the correlation between selected pollutant and meteorology data using Plotly
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_pollutant], mode='lines', name=selected_pollutant))
     fig.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology))
 
-    # Update the layout with y-axis titles
+    # Update the layout with titles and y-axis labels
     fig.update_layout(
         title=f'Correlation between {selected_pollutant} and {selected_meteorology}',
         xaxis_title='Time',
@@ -48,14 +48,16 @@ if option == 'Correlation':
         yaxis2=dict(title=selected_meteorology, side='right', overlaying='y')
     )
 
+    # Display the correlation line plot
     st.plotly_chart(fig)
 
-    # Create separate line plots for the selected pollutant and meteorology data
+    # Create separate line plot for the selected pollutant data
     fig_pollutant = go.Figure()
     fig_pollutant.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_pollutant], mode='lines', name=selected_pollutant))
     fig_pollutant.update_layout(title=f'{selected_pollutant} Trend', xaxis_title='Time', yaxis_title='Concentration')
     st.plotly_chart(fig_pollutant)
-    
+
+    # Create separate line plot for the selected meteorology data
     fig_meteorology = go.Figure()
     fig_meteorology.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology))
     fig_meteorology.update_layout(title=f'{selected_meteorology} Trend', xaxis_title='Time', yaxis_title='Value')
@@ -88,6 +90,7 @@ if option == 'Correlation':
 
     # Display the correlation coefficient
     st.write("Correlation Coefficient:", correlation_coefficient)
+
     
 elif option == 'ISPU':
     # Rest of the code remains the same
