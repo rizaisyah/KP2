@@ -198,10 +198,10 @@ elif option == 'ISPU':
                 xaxis_title='Pollutants',
                 yaxis_title='Mean ISPU Values'
             )
-            
+                        
             # Update each bar with custom color and label
-            for i, bar in enumerate(fig.data[0].marker['color']):
-                bar = colors[i]
+            for i in range(len(colors)):
+                fig.data[0].marker.color[i] = colors[i]
                 fig.data[0].text[i] = labels[i]
             
             st.plotly_chart(fig)
