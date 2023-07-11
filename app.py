@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objects as go
 from datetime import datetime, time
 
 # Load data
@@ -36,10 +36,18 @@ if option == 'Correlation':
     filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)]
 
     # Create line plots for pollutants and meteorology data using Plotly
-    fig = px.line(filtered_data, x='Waktu', y=selected_pollutant, title=f'{selected_pollutant} Trend')
-    fig.update_layout(yaxis_title=selected_pollutant)
-    fig.add_scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology, yaxis='y2')
-    fig.update_layout(yaxis2_title=selected_meteorology, yaxis2=dict(anchor='x', overlaying='y', side='right'))
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_pollutant], mode='lines', name=selected_pollutant))
+    fig.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology, yaxis='y2'))
+    
+    fig.update_layout(
+        title=f'Correlation between {selected_pollutant} and {selected_meteorology}',
+        xaxis_title='Time',
+        yaxis_title=selected_pollutant,
+        yaxis2_title=selected_meteorology,
+        yaxis2=dict(anchor='x', overlaying='y', side='right')
+    )
+    
     st.plotly_chart(fig)
 
     # Calculate the mean, maximum, and minimum values of the selected pollutant column
@@ -66,6 +74,9 @@ if option == 'Correlation':
 
 elif option == 'ISPU':
     # Rest of the code remains the same
+
+# Rest of the code remains the same
+
 
 # Rest of the code remains the same
 
