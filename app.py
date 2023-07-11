@@ -91,8 +91,7 @@ if option == 'Correlation':
 
     # Display the correlation coefficient
     st.write("Correlation Coefficient:", correlation_coefficient)
-
-
+    
     # Define the correlation coefficient threshold
     correlation_threshold = 0.5
     
@@ -100,11 +99,11 @@ if option == 'Correlation':
     strong_correlation_ranges = []
     current_range_start = None
     
+    # Calculate the correlation coefficient between the selected pollutant and meteorology data
+    correlation = filtered_data[[selected_pollutant, selected_meteorology]].corr().iloc[0, 1]
+    
     # Iterate over the filtered data and find the time ranges with strong correlation
     for i in range(1, len(filtered_data)):
-        correlation = filtered_data[selected_pollutant].iloc[i].corr(filtered_data[selected_meteorology].iloc[i])
-        
-        # Check if the correlation exceeds the threshold
         if abs(correlation) >= correlation_threshold:
             if current_range_start is None:
                 # Start a new range
@@ -123,6 +122,7 @@ if option == 'Correlation':
             st.write(start, "to", end)
     else:
         st.write("No time ranges were found with a strong correlation.")
+
 
 
     
