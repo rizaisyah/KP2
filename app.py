@@ -88,7 +88,7 @@ elif option == 'ISPU':
     import streamlit as st
     import matplotlib.pyplot as plt
 
-    data = pd.read_csv('Kota Jogja 2020_01-12.csv')
+    
     data['Waktu'] = pd.to_datetime(data['Waktu'])
 
     option = st.radio("Select ISPU Calculation Option:", ('Manual Input', 'From Data'))
@@ -220,7 +220,7 @@ elif option == 'Download':
     from datetime import datetime
 
     # Load data from CSV file
-    data = pd.read_csv('Kota Jogja 2020_01-12.csv')
+    data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
     data['Waktu'] = pd.to_datetime(data['Waktu'])
 
     # Sidebar options
@@ -263,11 +263,22 @@ elif option == 'Data Analyst':
     import seaborn as sns
     st.header('Data Analysis')
 
+    # Date range selection
+    start_date = st.date_input('Start Date', value=data['Waktu'].min().to_pydatetime().date())
+    end_date = st.date_input('End Date', value=data['Waktu'].max().to_pydatetime().date())
+
+    # Convert start_date and end_date to datetime objects
+    start_datetime = pd.to_datetime(start_date)
+    end_datetime = pd.to_datetime(end_date)
+
+    # Filter data based on date range
+    filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)]
+
     # Summary statistics
     st.subheader('Summary Statistics')
 
     # Calculate mean, median, and standard deviation for each pollutant
-    summary_stats = data.describe()[1:4]
+    summary_stats = filtered_data.describe()[1:4]
 
     # Display summary statistics in a table
     st.table(summary_stats)
@@ -290,8 +301,8 @@ elif option == 'Data Analyst':
     }
 
     # Plot the trends for each pollutant
-    for pollutant in data.columns[1:8]:
-        ax.plot(data['Waktu'], data[pollutant], label=pollutant)
+    for pollutant in filtered_data.columns[1:8]:
+        ax.plot(filtered_data['Waktu'], filtered_data[pollutant], label=pollutant)
         
         # Set the y-axis range for each pollutant
         ax.set_ylim(particle_ranges[pollutant])
@@ -306,10 +317,11 @@ elif option == 'Data Analyst':
 
     # Display the plot in the app
     st.pyplot(fig)
+
     # Additional data analysis and visualizations can be added here
 
     # Compute the correlation matrix
-    correlation_matrix = data.corr()
+    correlation_matrix = filtered_data.corr()
 
     # Create a heatmap using seaborn
     fig, ax = plt.subplots(figsize=(10, 8))
