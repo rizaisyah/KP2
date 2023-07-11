@@ -192,22 +192,19 @@ elif option == 'ISPU':
             colors = ['green' if value <= 50 else 'blue' if value <= 100 else 'yellow' if value <= 200 else 'red' if value <= 300 else 'black' for value in mean_ISPU_values]
             labels = ['Sehat' if value <= 50 else 'Sedang' if value <= 100 else 'Tidak Sehat' if value <= 200 else 'Sangat Tidak Sehat' if value <= 300 else 'Berbahaya' for value in mean_ISPU_values]
             
-            fig = go.Figure(data=[go.Bar(x=pollutants, y=mean_ISPU_values, marker=dict(color=colors))])
+            fig = go.Figure(data=[go.Bar(x=pollutants, y=mean_ISPU_values)])
             fig.update_layout(
                 title='Mean ISPU Values for Pollutants',
                 xaxis_title='Pollutants',
                 yaxis_title='Mean ISPU Values'
             )
             
-            # Add custom labels to the color legend
-            fig.update_traces(
-                showlegend=True,
-                legendtitle='ISPU Category',
-                hovertemplate='ISPU Category: %{text}<br>Mean ISPU Value: %{y}',
-                text=labels
-            )
+            # Update each bar with custom color and label
+            for i, bar in enumerate(fig.data[0].marker.color):
+                bar.color = colors[i]
+                bar.hovertemplate = f'ISPU Category: {labels[i]}<br>Mean ISPU Value: %{{y}}'
 
-            st.plotly_chart(fig)
+st.plotly_chart(fig)
 
 elif option == 'Download':
     import streamlit as st
