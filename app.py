@@ -360,14 +360,64 @@ elif option == 'Data Analyst':
 
 elif option == 'Camera':
     import streamlit as st
-    from streamlit.components.v1 import iframe
+    import cv2
+    import numpy as np
+    from pytube import YouTube
+    import tempfile
+    
+    # Load YOLO
+    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
+    classes = []
+    with open("coco.names", "r") as f:
+        classes = [line.strip() for line in f.readlines()]
+    
+    # Function to perform object detection
+    def detect_objects(image):
+        # Same object detection code as in the previous example
+    
+    # Streamlit app
+    def main():
+        st.title("Object Detection from YouTube Video")
+        youtube_link = st.text_input("Enter the YouTube video link", "https://www.youtube.com/watch?v=OBCuZGLKygg")
+    
+        if st.button("Process Video"):
+            if youtube_link:
+                try:
+                    # Download the YouTube video
+                    st.write("Downloading the video...")
+                    yt = YouTube(youtube_link)
+                    stream = yt.streams.filter(adaptive=True).first()
+                    
+                    # Create a temporary directory to store the video
+                    with tempfile.TemporaryDirectory() as temp_dir:
+                        video_file_path = stream.download(temp_dir, filename="youtube_video")
+                        
+                        # Read the downloaded video file
+                        video = cv2.VideoCapture(video_file_path)
+    
+                        while True:
+                            ret, frame = video.read()
+                            if not ret:
+                                break
+    
+                            # Perform object detection on the frame
+                            detected_frame = detect_objects(frame)
+    
+                            # Display the frame with object detection
+                            st.image(detected_frame, channels="BGR")
+    
+                        video.release()
+                        st.write("Video processing completed!")
+    
+                except Exception as e:
+                    st.error("Error: " + str(e))
+            
+            else:
+                st.warning("Please enter a valid YouTube video link.")
+    
+    if __name__ == "__main__":
+        main()
 
-    # Define the URL of the webpage you want to embed
-    webpage_url = "https://cctvjss.jogjakota.go.id/atcs/ATCS_mirota.stream"
-
-    # Render the iframe to display the webpage
-    st.write("Webpage")
-    iframe(webpage_url, width=800, height=600)
 
 
 
