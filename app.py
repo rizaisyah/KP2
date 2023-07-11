@@ -360,25 +360,22 @@ elif option == 'Data Analyst':
 
 elif option == 'Camera':
     import streamlit as st
-    from streamlit.components.v1 import iframe
+    from streamlit.components.v1 import html
     
     # Streamlit app
     def main():
         st.title("YouTube Video Player")
         youtube_link = st.text_input("Enter the YouTube video link", "https://www.youtube.com/watch?v=OBCuZGLKygg")
     
-        if st.button("Load Video"):
+        if st.button("Play Video"):
             if youtube_link:
-                # Generate the embedded YouTube video URL
-                video_id = youtube_link.split("=")[-1]
-                embedded_url = f"https://www.youtube.com/embed/{video_id}"
-    
-                # Display the YouTube video frame
-                st.write("YouTube Video:")
-                iframe(embedded_url, width=560, height=315)
-    
+                # Generate HTML code for embedding the YouTube video
+                video_html = f'<iframe width="560" height="315" src="{youtube_link}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+                
+                # Display the YouTube video using HTML iframe
+                st.write(html(video_html, width=700, height=400))
             else:
-                st.warning("Please enter a valid YouTube video link.")
+                st.warning("Please enter a YouTube video link.")
     
     if __name__ == "__main__":
         main()
