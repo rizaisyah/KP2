@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from datetime import datetime, time
 
 # Load data
-data = pd.read_csv('Kota Jogja 2020_01-12.csv')
+data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
 data['Waktu'] = pd.to_datetime(data['Waktu'])
 
 option = st.sidebar.selectbox('Select Option', ('Correlation', 'ISPU', 'Download', 'Data Analyst', 'Camera'))
