@@ -361,7 +361,7 @@ elif option == 'Data Analyst':
 elif option == 'Camera':
     import streamlit as st
     import pytube
-    from moviepy.editor import VideoFileClip
+    from IPython.display import YouTubeVideo
     
     # Streamlit app
     def main():
@@ -377,9 +377,9 @@ elif option == 'Camera':
                     video = youtube.streams.get_highest_resolution()
                     video_file = video.download()
     
-                    # Play the video using MoviePy
-                    clip = VideoFileClip(video_file)
-                    st.video(clip)
+                    # Play the video using IPython
+                    st.write("Video playback...")
+                    st.video(video_file)
     
                     st.write("Video playback completed!")
     
