@@ -286,33 +286,7 @@ elif option == 'Data Analyst':
     st.pyplot(fig)
     # Additional data analysis and visualizations can be added here
 
-    # Compute the correlation matrix
-    correlation_matrix = data.corr()
 
-    # Create a heatmap using seaborn
-    fig, ax = plt.subplots(figsize=(10, 8))
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', ax=ax)
-
-    # Set the title and labels
-    plt.title('Correlation Matrix')
-    plt.xlabel('Variables')
-    plt.ylabel('Variables')
-
-    # Display the plot in Streamlit app
-    st.pyplot(fig)
-
-    # Histogram of pollutant concentrations
-    st.subheader('Histogram of Pollutant Concentrations')
-
-    # Select pollutant
-    selected_pollutant = st.selectbox('Select Pollutant', data.columns[1:8])
-
-    # Plot histogram
-    plt.hist(data[selected_pollutant], bins=10)
-    plt.xlabel('Concentration')
-    plt.ylabel('Frequency')
-    plt.title(f'Histogram of {selected_pollutant} Concentrations')
-    st.pyplot()
 
     # Additional data analysis and visualizations can be added here
 
