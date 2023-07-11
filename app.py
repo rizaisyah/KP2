@@ -188,15 +188,25 @@ elif option == 'ISPU':
             # Create a bar chart
             pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
             mean_ISPU_values = [mean_ISPU_PM2p5, mean_ISPU_PM10, mean_ISPU_SO2, mean_ISPU_CO, mean_ISPU_O3, mean_ISPU_NO2, mean_ISPU_HC]
+            # Define color list and labels based on ISPU value ranges
             colors = ['green' if value <= 50 else 'blue' if value <= 100 else 'yellow' if value <= 200 else 'red' if value <= 300 else 'black' for value in mean_ISPU_values]
-
+            labels = ['Sehat' if value <= 50 else 'Sedang' if value <= 100 else 'Tidak Sehat' if value <= 200 else 'Sangat Tidak Sehat' if value <= 300 else 'Berbahaya' for value in mean_ISPU_values]
+            
             fig = go.Figure(data=[go.Bar(x=pollutants, y=mean_ISPU_values, marker=dict(color=colors))])
             fig.update_layout(
                 title='Mean ISPU Values for Pollutants',
                 xaxis_title='Pollutants',
                 yaxis_title='Mean ISPU Values'
             )
-        
+            
+            # Add custom labels to the color legend
+            fig.update_traces(
+                showlegend=True,
+                legendtitle='ISPU Category',
+                hovertemplate='ISPU Category: %{text}<br>Mean ISPU Value: %{y}',
+                text=labels
+            )
+
             st.plotly_chart(fig)
 
 elif option == 'Download':
