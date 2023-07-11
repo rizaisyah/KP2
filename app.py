@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from datetime import datetime, time
 from plotly.subplots import make_subplots
+import seaborn as sns
 
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
@@ -111,15 +113,6 @@ if option == 'Correlation':
     
     
 elif option == 'ISPU':
-    # Rest of the code remains the same
-
-# Rest of the code remains the same
-
-
-    import pandas as pd
-    import streamlit as st
-    import matplotlib.pyplot as plt
-
     
     data['Waktu'] = pd.to_datetime(data['Waktu'])
 
@@ -247,10 +240,6 @@ elif option == 'ISPU':
             
 
 elif option == 'Download':
-    import streamlit as st
-    import pandas as pd
-    from datetime import datetime
-
     # Load data from CSV file
     data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
     data['Waktu'] = pd.to_datetime(data['Waktu'])
@@ -291,8 +280,7 @@ elif option == 'Download':
 # Rest of your code...
 
 elif option == 'Data Analyst':
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+
     st.header('Data Analysis')
 
     # Date range selection
