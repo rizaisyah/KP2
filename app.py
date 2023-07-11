@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 from datetime import datetime, time
-import matplotlib.dates as mdates
 
 # Load data
 data = pd.read_csv('Kota Jogja 2020_01-12.csv')
@@ -36,36 +35,22 @@ if option == 'Correlation':
     # Filter data based on selected date and time range
     filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)]
 
-    # Create subplots for pollutants and meteorology data
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
-
-    # Plot pollutant data
-    ax1.plot(filtered_data['Waktu'], filtered_data[selected_pollutant], color='blue')
-    ax1.set_ylabel(selected_pollutant)
-
-    # Plot meteorology data
-    ax2.plot(filtered_data['Waktu'], filtered_data[selected_meteorology], color='red')
-    ax2.set_ylabel(selected_meteorology)
-
-    # Set common x-axis label and title
-    plt.xlabel('Time')
-    plt.suptitle('Correlation between Pollutants and Meteorological Data')
-
-    # Adjust layout and spacing between subplots
-    plt.tight_layout()
-
-    # Display the plot in the app
-    st.pyplot(plt)
+    # Create line plots for pollutants and meteorology data using Plotly
+    fig = px.line(filtered_data, x='Waktu', y=selected_pollutant, title=f'{selected_pollutant} Trend')
+    fig.update_layout(yaxis_title=selected_pollutant)
+    fig.add_scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology, yaxis='y2')
+    fig.update_layout(yaxis2_title=selected_meteorology, yaxis2=dict(anchor='x', overlaying='y', side='right'))
+    st.plotly_chart(fig)
 
     # Calculate the mean, maximum, and minimum values of the selected pollutant column
-    pollutant_mean = data[selected_pollutant].mean()
-    pollutant_max = data[selected_pollutant].max()
-    pollutant_min = data[selected_pollutant].min()
+    pollutant_mean = filtered_data[selected_pollutant].mean()
+    pollutant_max = filtered_data[selected_pollutant].max()
+    pollutant_min = filtered_data[selected_pollutant].min()
 
     # Calculate the mean, maximum, and minimum values of the selected meteorology column
-    meteorology_mean = data[selected_meteorology].mean()
-    meteorology_max = data[selected_meteorology].max()
-    meteorology_min = data[selected_meteorology].min()
+    meteorology_mean = filtered_data[selected_meteorology].mean()
+    meteorology_max = filtered_data[selected_meteorology].max()
+    meteorology_min = filtered_data[selected_meteorology].min()
 
     # Display the mean, maximum, and minimum values for the selected pollutant
     st.write("Pollutant:", selected_pollutant)
@@ -80,6 +65,10 @@ if option == 'Correlation':
     st.write("Minimum:", meteorology_min)
 
 elif option == 'ISPU':
+    # Rest of the code remains the same
+
+# Rest of the code remains the same
+
     import pandas as pd
     import streamlit as st
     import matplotlib.pyplot as plt
