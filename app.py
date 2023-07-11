@@ -50,6 +50,17 @@ if option == 'Correlation':
 
     st.plotly_chart(fig)
 
+    # Create separate line plots for the selected pollutant and meteorology data
+    fig_pollutant = go.Figure()
+    fig_pollutant.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_pollutant], mode='lines', name=selected_pollutant))
+    fig_pollutant.update_layout(title=f'{selected_pollutant} Trend', xaxis_title='Time', yaxis_title='Concentration')
+    st.plotly_chart(fig_pollutant)
+    
+    fig_meteorology = go.Figure()
+    fig_meteorology.add_trace(go.Scatter(x=filtered_data['Waktu'], y=filtered_data[selected_meteorology], mode='lines', name=selected_meteorology))
+    fig_meteorology.update_layout(title=f'{selected_meteorology} Trend', xaxis_title='Time', yaxis_title='Value')
+    st.plotly_chart(fig_meteorology)
+
     # Calculate the mean, maximum, and minimum values of the selected pollutant column
     pollutant_mean = filtered_data[selected_pollutant].mean()
     pollutant_max = filtered_data[selected_pollutant].max()
@@ -77,7 +88,7 @@ if option == 'Correlation':
 
     # Display the correlation coefficient
     st.write("Correlation Coefficient:", correlation_coefficient)
-
+    
 elif option == 'ISPU':
     # Rest of the code remains the same
 
