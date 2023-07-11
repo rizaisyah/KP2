@@ -231,6 +231,12 @@ elif option == 'Download':
             mime="text/csv"
         )
 
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Rest of your code...
+
 elif option == 'Data Analyst':
     st.header('Data Analysis')
 
@@ -277,10 +283,8 @@ elif option == 'Data Analyst':
 
     # Display the plot in the app
     st.pyplot(fig)
-
     # Additional data analysis and visualizations can be added here
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+
     # Compute the correlation matrix
     correlation_matrix = data.corr()
 
