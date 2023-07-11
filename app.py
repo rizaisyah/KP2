@@ -44,9 +44,7 @@ if option == 'Correlation':
     fig.update_layout(
         title=f'Correlation between {selected_pollutant} and {selected_meteorology}',
         xaxis_title='Time',
-        yaxis_title=selected_pollutant,
-        yaxis2_title=selected_meteorology,
-        yaxis=dict(title=selected_pollutant, side='left'),
+        yaxis=dict(title=selected_pollutant),
         yaxis2=dict(title=selected_meteorology, side='right', overlaying='y')
     )
 
