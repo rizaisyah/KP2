@@ -66,19 +66,19 @@ if option == 'Correlation':
 
     # Calculate the maximum value and its corresponding date for the selected pollutant
     pollutant_max_value = filtered_data[selected_pollutant].max()
-    pollutant_max_date = filtered_data['Waktu'].loc[filtered_data[selected_pollutant].idxmax()]
+    pollutant_max_date = filtered_data.loc[filtered_data[selected_pollutant].idxmax(), 'Waktu']
     
     # Calculate the minimum value and its corresponding date for the selected pollutant
     pollutant_min_value = filtered_data[selected_pollutant].min()
-    pollutant_min_date = filtered_data['Waktu'].loc[filtered_data[selected_pollutant].idxmin()]
+    pollutant_min_date = filtered_data.loc[filtered_data[selected_pollutant].idxmin(), 'Waktu']
     
     # Calculate the maximum value and its corresponding date for the selected meteorology data
     meteorology_max_value = filtered_data[selected_meteorology].max()
-    meteorology_max_date = filtered_data['Waktu'].loc[filtered_data[selected_meteorology].idxmax()]
+    meteorology_max_date = filtered_data.loc[filtered_data[selected_meteorology].idxmax(), 'Waktu']
     
     # Calculate the minimum value and its corresponding date for the selected meteorology data
     meteorology_min_value = filtered_data[selected_meteorology].min()
-    meteorology_min_date = filtered_data['Waktu'].loc[filtered_data[selected_meteorology].idxmin()]
+    meteorology_min_date = filtered_data.loc[filtered_data[selected_meteorology].idxmin(), 'Waktu']
     
     # Display the mean, maximum, and minimum values for the selected pollutant
     st.write("Pollutant:", selected_pollutant)
