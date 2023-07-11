@@ -360,8 +360,7 @@ elif option == 'Data Analyst':
 
 elif option == 'Camera':
     import streamlit as st
-    import pytube
-    from IPython.display import YouTubeVideo
+    from streamlit.components.v1 import iframe
     
     # Streamlit app
     def main():
@@ -370,27 +369,20 @@ elif option == 'Camera':
     
         if st.button("Load Video"):
             if youtube_link:
-                try:
-                    # Download the YouTube video
-                    st.write("Downloading the video...")
-                    youtube = pytube.YouTube(youtube_link)
-                    video = youtube.streams.get_highest_resolution()
-                    video_file = video.download()
+                # Generate the embedded YouTube video URL
+                video_id = youtube_link.split("=")[-1]
+                embedded_url = f"https://www.youtube.com/embed/{video_id}"
     
-                    # Play the video using IPython
-                    st.write("Video playback...")
-                    st.video(video_file)
+                # Display the YouTube video frame
+                st.write("YouTube Video:")
+                iframe(embedded_url, width=560, height=315)
     
-                    st.write("Video playback completed!")
-    
-                except Exception as e:
-                    st.error("Error: " + str(e))
-            
             else:
                 st.warning("Please enter a valid YouTube video link.")
     
     if __name__ == "__main__":
         main()
+
 
 
 
