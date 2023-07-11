@@ -92,25 +92,39 @@ if option == 'Correlation':
     # Display the correlation coefficient
     st.write("Correlation Coefficient:", correlation_coefficient)
 
-    # Find time ranges based on correlation coefficient threshold
-    threshold = 0.5
-    correlation_ranges = []
+
+    # Define the correlation coefficient threshold
+    correlation_threshold = 0.5
+    
+    # Create variables to track the range with strong correlation
+    strong_correlation_ranges = []
     current_range_start = None
-
-    for index, row in filtered_data.iterrows():
-        if current_range_start is None:
-            current_range_start = row['Waktu']
-        elif abs(row[selected_pollutant] - row[selected_meteorology]) > threshold:
-            correlation_ranges.append((current_range_start, row['Waktu']))
-            current_range_start = None
-
-    # Display time ranges with correlation coefficient above/below the threshold
-    if len(correlation_ranges) > 0:
-        st.write(f"Time Ranges with Correlation Coefficient {'>' if correlation_coefficient > threshold else '<'} {threshold}:")
-        for range_start, range_end in correlation_ranges:
-            st.write(f"{range_start} - {range_end}")
+    
+    # Iterate over the filtered data and find the time ranges with strong correlation
+    for i in range(1, len(filtered_data)):
+        correlation = filtered_data[selected_pollutant].iloc[i].corr(filtered_data[selected_meteorology].iloc[i])
+        
+        # Check if the correlation exceeds the threshold
+        if abs(correlation) >= correlation_threshold:
+            if current_range_start is None:
+                # Start a new range
+                current_range_start = filtered_data['Waktu'].iloc[i]
+        else:
+            if current_range_start is not None:
+                # End the current range and add it to the list
+                current_range_end = filtered_data['Waktu'].iloc[i-1]
+                strong_correlation_ranges.append((current_range_start, current_range_end))
+                current_range_start = None
+    
+    # Check if any strong correlation ranges were found
+    if len(strong_correlation_ranges) > 0:
+        st.write("Time Ranges with Strong Correlation:")
+        for start, end in strong_correlation_ranges:
+            st.write(start, "to", end)
     else:
-        st.write("No time ranges found with the specified correlation coefficient threshold.")
+        st.write("No time ranges were found with a strong correlation.")
+
+
     
 elif option == 'ISPU':
     # Rest of the code remains the same
