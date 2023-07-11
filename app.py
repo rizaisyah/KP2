@@ -370,20 +370,7 @@ elif option == 'Camera':
     
     # Extract video ID from the link
     video_id = video_link.split("=")[1]
-    
-    # Get the YouTube video thumbnail URL
-    thumbnail_url = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
-    
-    # Fetch the thumbnail image from the URL
-    response = requests.get(thumbnail_url)
-    thumbnail_image = Image.open(BytesIO(response.content))
-    
-    # Display the thumbnail image
-    st.image(thumbnail_image)
-    
-    # Add a button to play the video
-    if st.button("Play Video"):
-        st.video(video_link)
+    st.video(video_link)
 
 
 
