@@ -72,6 +72,12 @@ if option == 'Correlation':
     st.write("Maximum:", meteorology_max)
     st.write("Minimum:", meteorology_min)
 
+    # Calculate the correlation coefficient between the selected pollutant and meteorology data
+    correlation_coefficient = filtered_data[[selected_pollutant, selected_meteorology]].corr().iloc[0, 1]
+
+    # Display the correlation coefficient
+    st.write("Correlation Coefficient:", correlation_coefficient)
+
 elif option == 'ISPU':
     # Rest of the code remains the same
 
