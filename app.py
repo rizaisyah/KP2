@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime, time
+from plotly.subplots import make_subplots
 
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
