@@ -360,33 +360,34 @@ elif option == 'Data Analyst':
 
 elif option == 'Camera':
     import streamlit as st
-    import requests
-    from PIL import Image
-    from io import BytesIO
-    import pytube
+    from IPython.display import YouTubeVideo
     
     # Streamlit app
     def main():
         st.title("YouTube Video Player")
         youtube_link = "https://www.youtube.com/watch?v=OBCuZGLKygg"
     
+        # Display the YouTube video thumbnail
+        st.image(get_youtube_thumbnail(youtube_link), caption="YouTube Video Thumbnail")
+    
+        # Play button
         if st.button("Play Video"):
-            if youtube_link:
-                # Extract the video thumbnail URL using pytube
-                video = pytube.YouTube(youtube_link)
-                thumbnail_url = video.thumbnail_url
+            st.video(get_youtube_video_id(youtube_link))
     
-                # Fetch the thumbnail image
-                response = requests.get(thumbnail_url)
-                thumbnail_image = Image.open(BytesIO(response.content))
+    # Function to get the YouTube video thumbnail URL
+    def get_youtube_thumbnail(url):
+        video_id = get_youtube_video_id(url)
+        thumbnail_url = f"https://img.youtube.com/vi/{video_id}/0.jpg"
+        return thumbnail_url
     
-                # Display the thumbnail image
-                st.image(thumbnail_image, caption="YouTube Video Thumbnail")
-            else:
-                st.warning("Please enter a YouTube video link.")
+    # Function to get the YouTube video ID
+    def get_youtube_video_id(url):
+        video_id = url.split("v=")[1]
+        return video_id
     
     if __name__ == "__main__":
         main()
+
 
 
 
