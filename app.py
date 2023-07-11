@@ -232,12 +232,13 @@ elif option == 'Download':
         )
 
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 # Rest of your code...
 
 elif option == 'Data Analyst':
+    import matplotlib.pyplot as plt
+    import seaborn as sns
     st.header('Data Analysis')
 
     # Summary statistics
