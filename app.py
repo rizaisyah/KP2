@@ -139,58 +139,58 @@ elif option == 'ISPU':
         else:
             st.write(f'Invalid partikel selection: {partikel}')
 
-   elif option == 'From Data':
-        data['ISPU_PM10'] = pd.cut(data['PM10'], bins=[-float('inf'), 50, 150, 350, 420, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_PM2p5'] = pd.cut(data['PM2p5'], bins=[-float('inf'), 15.5, 55.4, 150.4, 250.4, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_SO2'] = pd.cut(data['SO2'], bins=[-float('inf'), 52, 180, 400, 800, 1000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_CO'] = pd.cut(data['CO'], bins=[-float('inf'), 4000, 8000, 15000, 30000, 45000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_O3'] = pd.cut(data['O3'], bins=[-float('inf'), 120, 235, 400, 800, 1000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_NO2'] = pd.cut(data['NO2'], bins=[-float('inf'), 80, 200, 1130, 2260, 3000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-        data['ISPU_HC'] = pd.cut(data['HC'], bins=[-float('inf'), 45, 100, 215, 432, 648, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
-    
-        st.write(data)
-    
-        # Convert categorical columns to numeric
-        data['ISPU_PM2p5'] = pd.to_numeric(data['ISPU_PM2p5'])
-        data['ISPU_PM10'] = pd.to_numeric(data['ISPU_PM10'])
-        data['ISPU_SO2'] = pd.to_numeric(data['ISPU_SO2'])
-        data['ISPU_CO'] = pd.to_numeric(data['ISPU_CO'])
-        data['ISPU_O3'] = pd.to_numeric(data['ISPU_O3'])
-        data['ISPU_NO2'] = pd.to_numeric(data['ISPU_NO2'])
-        data['ISPU_HC'] = pd.to_numeric(data['ISPU_HC'])
-    
-        # Date range selection
-        start_date = st.date_input('Start Date')
-        end_date = st.date_input('End Date')
-    
-        # Convert start_date and end_date to datetime objects
-        start_datetime = pd.to_datetime(start_date)
-        end_datetime = pd.to_datetime(end_date)
-    
-        # Filter data based on date range
-        filtered_data = data[(data['Waktu'].dt.date >= start_datetime) & (data['Waktu'].dt.date <= end_datetime)]
-    
-        # Calculate the mean ISPU for each pollutant
-        mean_ISPU_PM2p5 = filtered_data['ISPU_PM2p5'].mean()
-        mean_ISPU_PM10 = filtered_data['ISPU_PM10'].mean()
-        mean_ISPU_SO2 = filtered_data['ISPU_SO2'].mean()
-        mean_ISPU_CO = filtered_data['ISPU_CO'].mean()
-        mean_ISPU_O3 = filtered_data['ISPU_O3'].mean()
-        mean_ISPU_NO2 = filtered_data['ISPU_NO2'].mean()
-        mean_ISPU_HC = filtered_data['ISPU_HC'].mean()
-    
-        # Create a bar chart
-        pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
-        mean_ISPU_values = [mean_ISPU_PM2p5, mean_ISPU_PM10, mean_ISPU_SO2, mean_ISPU_CO, mean_ISPU_O3, mean_ISPU_NO2, mean_ISPU_HC]
-    
-        fig = go.Figure(data=[go.Bar(x=pollutants, y=mean_ISPU_values)])
-        fig.update_layout(
-            title='Mean ISPU Values for Pollutants',
-            xaxis_title='Pollutants',
-            yaxis_title='Mean ISPU Values'
-        )
-    
-        st.plotly_chart(fig)
+       elif option == 'From Data':
+            data['ISPU_PM10'] = pd.cut(data['PM10'], bins=[-float('inf'), 50, 150, 350, 420, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_PM2p5'] = pd.cut(data['PM2p5'], bins=[-float('inf'), 15.5, 55.4, 150.4, 250.4, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_SO2'] = pd.cut(data['SO2'], bins=[-float('inf'), 52, 180, 400, 800, 1000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_CO'] = pd.cut(data['CO'], bins=[-float('inf'), 4000, 8000, 15000, 30000, 45000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_O3'] = pd.cut(data['O3'], bins=[-float('inf'), 120, 235, 400, 800, 1000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_NO2'] = pd.cut(data['NO2'], bins=[-float('inf'), 80, 200, 1130, 2260, 3000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+            data['ISPU_HC'] = pd.cut(data['HC'], bins=[-float('inf'), 45, 100, 215, 432, 648, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
+        
+            st.write(data)
+        
+            # Convert categorical columns to numeric
+            data['ISPU_PM2p5'] = pd.to_numeric(data['ISPU_PM2p5'])
+            data['ISPU_PM10'] = pd.to_numeric(data['ISPU_PM10'])
+            data['ISPU_SO2'] = pd.to_numeric(data['ISPU_SO2'])
+            data['ISPU_CO'] = pd.to_numeric(data['ISPU_CO'])
+            data['ISPU_O3'] = pd.to_numeric(data['ISPU_O3'])
+            data['ISPU_NO2'] = pd.to_numeric(data['ISPU_NO2'])
+            data['ISPU_HC'] = pd.to_numeric(data['ISPU_HC'])
+        
+            # Date range selection
+            start_date = st.date_input('Start Date')
+            end_date = st.date_input('End Date')
+        
+            # Convert start_date and end_date to datetime objects
+            start_datetime = pd.to_datetime(start_date)
+            end_datetime = pd.to_datetime(end_date)
+        
+            # Filter data based on date range
+            filtered_data = data[(data['Waktu'].dt.date >= start_datetime) & (data['Waktu'].dt.date <= end_datetime)]
+        
+            # Calculate the mean ISPU for each pollutant
+            mean_ISPU_PM2p5 = filtered_data['ISPU_PM2p5'].mean()
+            mean_ISPU_PM10 = filtered_data['ISPU_PM10'].mean()
+            mean_ISPU_SO2 = filtered_data['ISPU_SO2'].mean()
+            mean_ISPU_CO = filtered_data['ISPU_CO'].mean()
+            mean_ISPU_O3 = filtered_data['ISPU_O3'].mean()
+            mean_ISPU_NO2 = filtered_data['ISPU_NO2'].mean()
+            mean_ISPU_HC = filtered_data['ISPU_HC'].mean()
+        
+            # Create a bar chart
+            pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
+            mean_ISPU_values = [mean_ISPU_PM2p5, mean_ISPU_PM10, mean_ISPU_SO2, mean_ISPU_CO, mean_ISPU_O3, mean_ISPU_NO2, mean_ISPU_HC]
+        
+            fig = go.Figure(data=[go.Bar(x=pollutants, y=mean_ISPU_values)])
+            fig.update_layout(
+                title='Mean ISPU Values for Pollutants',
+                xaxis_title='Pollutants',
+                yaxis_title='Mean ISPU Values'
+            )
+        
+            st.plotly_chart(fig)
 
 elif option == 'Download':
     import streamlit as st
