@@ -102,24 +102,38 @@ if option == 'Correlation':
     # Calculate the correlation coefficient between the selected pollutant and meteorology data
     correlation = filtered_data[[selected_pollutant, selected_meteorology]].corr().iloc[0, 1]
     
-    # Iterate over the filtered data and find the time ranges with strong correlation
+    # Define the correlation coefficient threshold
+    correlation_threshold = 0.5
+    
+    # Create variables to track the range with strong correlation and its pattern
+    strong_correlation_ranges = []
+    current_range_start = None
+    current_pattern = None
+    
+    # Calculate the correlation coefficient between the selected pollutant and meteorology data
+    correlation = filtered_data[[selected_pollutant, selected_meteorology]].corr().iloc[0, 1]
+    
+    # Iterate over the filtered data and find the time ranges with strong correlation and their patterns
     for i in range(1, len(filtered_data)):
         if abs(correlation) >= correlation_threshold:
             if current_range_start is None:
                 # Start a new range
                 current_range_start = filtered_data['Waktu'].iloc[i]
+                current_pattern = correlation >= 0  # True for same pattern, False for opposite pattern
         else:
             if current_range_start is not None:
-                # End the current range and add it to the list
+                # End the current range and add it to the list with its pattern
                 current_range_end = filtered_data['Waktu'].iloc[i-1]
-                strong_correlation_ranges.append((current_range_start, current_range_end))
+                strong_correlation_ranges.append((current_range_start, current_range_end, current_pattern))
                 current_range_start = None
+                current_pattern = None
     
     # Check if any strong correlation ranges were found
     if len(strong_correlation_ranges) > 0:
         st.write("Time Ranges with Strong Correlation:")
-        for start, end in strong_correlation_ranges:
-            st.write(start, "to", end)
+        for start, end, pattern in strong_correlation_ranges:
+            pattern_text = "Same Pattern" if pattern else "Opposite Pattern"
+            st.write(start, "to", end, "-", pattern_text)
     else:
         st.write("No time ranges were found with a strong correlation.")
 
