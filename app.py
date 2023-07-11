@@ -64,21 +64,21 @@ if option == 'Correlation':
     fig_meteorology.update_layout(title=f'{selected_meteorology} Trend', xaxis_title='Time', yaxis_title='Value')
     st.plotly_chart(fig_meteorology)
 
-    # Calculate the maximum value and its corresponding date for the selected pollutant
+   # Calculate the maximum value and its corresponding date for the selected pollutant
     pollutant_max_value = filtered_data[selected_pollutant].max()
-    pollutant_max_date = filtered_data.loc[filtered_data[selected_pollutant].idxmax(), 'Waktu']
+    pollutant_max_date = filtered_data.loc[filtered_data[selected_pollutant] == pollutant_max_value, 'Waktu'].iloc[0]
     
     # Calculate the minimum value and its corresponding date for the selected pollutant
     pollutant_min_value = filtered_data[selected_pollutant].min()
-    pollutant_min_date = filtered_data.loc[filtered_data[selected_pollutant].idxmin(), 'Waktu']
+    pollutant_min_date = filtered_data.loc[filtered_data[selected_pollutant] == pollutant_min_value, 'Waktu'].iloc[0]
     
     # Calculate the maximum value and its corresponding date for the selected meteorology data
     meteorology_max_value = filtered_data[selected_meteorology].max()
-    meteorology_max_date = filtered_data.loc[filtered_data[selected_meteorology].idxmax(), 'Waktu']
+    meteorology_max_date = filtered_data.loc[filtered_data[selected_meteorology] == meteorology_max_value, 'Waktu'].iloc[0]
     
     # Calculate the minimum value and its corresponding date for the selected meteorology data
     meteorology_min_value = filtered_data[selected_meteorology].min()
-    meteorology_min_date = filtered_data.loc[filtered_data[selected_meteorology].idxmin(), 'Waktu']
+    meteorology_min_date = filtered_data.loc[filtered_data[selected_meteorology] == meteorology_min_value, 'Waktu'].iloc[0]
     
     # Display the mean, maximum, and minimum values for the selected pollutant
     st.write("Pollutant:", selected_pollutant)
@@ -91,6 +91,7 @@ if option == 'Correlation':
     st.write("Mean:", meteorology_mean)
     st.write("Maximum:", meteorology_max_value, "Date:", meteorology_max_date)
     st.write("Minimum:", meteorology_min_value, "Date:", meteorology_min_date)
+
 
     # Calculate the correlation coefficient between the selected pollutant and meteorology data
     correlation_coefficient = filtered_data[[selected_pollutant, selected_meteorology]].corr().iloc[0, 1]
