@@ -186,6 +186,9 @@ elif option == 'ISPU':
             mean_ISPU_HC = filtered_data['ISPU_HC'].mean()
         
             # Create a bar chart
+            pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
+            mean_ISPU_values = [mean_ISPU_PM2p5, mean_ISPU_PM10, mean_ISPU_SO2, mean_ISPU_CO, mean_ISPU_O3, mean_ISPU_NO2, mean_ISPU_HC]
+            
             # Define color list and labels based on ISPU value ranges
             colors = ['green' if value <= 50 else 'blue' if value <= 100 else 'yellow' if value <= 200 else 'red' if value <= 300 else 'black' for value in mean_ISPU_values]
             labels = ['Sehat' if value <= 50 else 'Sedang' if value <= 100 else 'Tidak Sehat' if value <= 200 else 'Sangat Tidak Sehat' if value <= 300 else 'Berbahaya' for value in mean_ISPU_values]
@@ -207,7 +210,7 @@ elif option == 'ISPU':
                     font=dict(color='black', size=12),
                     yshift=10 if value > 300 else -20
                 )
-            
+
             st.plotly_chart(fig)
             
 
