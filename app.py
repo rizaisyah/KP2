@@ -139,7 +139,7 @@ elif option == 'ISPU':
         else:
             st.write(f'Invalid partikel selection: {partikel}')
 
-       elif option == 'From Data':
+    elif option == 'From Data':
             data['ISPU_PM10'] = pd.cut(data['PM10'], bins=[-float('inf'), 50, 150, 350, 420, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
             data['ISPU_PM2p5'] = pd.cut(data['PM2p5'], bins=[-float('inf'), 15.5, 55.4, 150.4, 250.4, 500, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
             data['ISPU_SO2'] = pd.cut(data['SO2'], bins=[-float('inf'), 52, 180, 400, 800, 1000, float('inf')], labels=[0, 50, 100, 200, 300, 1000])
