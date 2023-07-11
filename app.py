@@ -360,54 +360,28 @@ elif option == 'Data Analyst':
 
 elif option == 'Camera':
     import streamlit as st
-    import cv2
-    import numpy as np
-    from pytube import YouTube
-    import tempfile
-    
-    # Load YOLO
-    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
-    classes = []
-    with open("coco.names", "r") as f:
-        classes = [line.strip() for line in f.readlines()]
-    
-    # Function to perform object detection
-    def detect_objects(image):
-        # Same object detection code as in the previous example
+    import pytube
+    from moviepy.editor import VideoFileClip
     
     # Streamlit app
     def main():
-        st.title("Object Detection from YouTube Video")
+        st.title("YouTube Video Player")
         youtube_link = st.text_input("Enter the YouTube video link", "https://www.youtube.com/watch?v=OBCuZGLKygg")
     
-        if st.button("Process Video"):
+        if st.button("Load Video"):
             if youtube_link:
                 try:
                     # Download the YouTube video
                     st.write("Downloading the video...")
-                    yt = YouTube(youtube_link)
-                    stream = yt.streams.filter(adaptive=True).first()
-                    
-                    # Create a temporary directory to store the video
-                    with tempfile.TemporaryDirectory() as temp_dir:
-                        video_file_path = stream.download(temp_dir, filename="youtube_video")
-                        
-                        # Read the downloaded video file
-                        video = cv2.VideoCapture(video_file_path)
+                    youtube = pytube.YouTube(youtube_link)
+                    video = youtube.streams.get_highest_resolution()
+                    video_file = video.download()
     
-                        while True:
-                            ret, frame = video.read()
-                            if not ret:
-                                break
+                    # Play the video using MoviePy
+                    clip = VideoFileClip(video_file)
+                    st.video(clip)
     
-                            # Perform object detection on the frame
-                            detected_frame = detect_objects(frame)
-    
-                            # Display the frame with object detection
-                            st.image(detected_frame, channels="BGR")
-    
-                        video.release()
-                        st.write("Video processing completed!")
+                    st.write("Video playback completed!")
     
                 except Exception as e:
                     st.error("Error: " + str(e))
@@ -417,6 +391,7 @@ elif option == 'Camera':
     
     if __name__ == "__main__":
         main()
+
 
 
 
