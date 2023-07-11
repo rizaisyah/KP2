@@ -200,11 +200,12 @@ elif option == 'ISPU':
             )
             
             # Update each bar with custom color and label
-            for i, bar in enumerate(fig.data[0].marker.color):
-                bar.color = colors[i]
-                bar.hovertemplate = f'ISPU Category: {labels[i]}<br>Mean ISPU Value: %{{y}}'
-
+            for i, bar in enumerate(fig.data[0].marker['color']):
+                bar = colors[i]
+                fig.data[0].text[i] = labels[i]
+            
             st.plotly_chart(fig)
+            
 
 elif option == 'Download':
     import streamlit as st
