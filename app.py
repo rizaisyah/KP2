@@ -279,6 +279,7 @@ elif option == 'Data Analyst':
     st.pyplot(fig)
 
     # Additional data analysis and visualizations can be added here
+    import matplotlib.pyplot as plt
     import seaborn as sns
     # Compute the correlation matrix
     correlation_matrix = data.corr()
