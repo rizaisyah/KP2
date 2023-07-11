@@ -92,7 +92,25 @@ if option == 'Correlation':
     # Display the correlation coefficient
     st.write("Correlation Coefficient:", correlation_coefficient)
 
+    # Find time ranges based on correlation coefficient threshold
+    threshold = 0.5
+    correlation_ranges = []
+    current_range_start = None
 
+    for index, row in filtered_data.iterrows():
+        if current_range_start is None:
+            current_range_start = row['Waktu']
+        elif abs(row[selected_pollutant] - row[selected_meteorology]) > threshold:
+            correlation_ranges.append((current_range_start, row['Waktu']))
+            current_range_start = None
+
+    # Display time ranges with correlation coefficient above/below the threshold
+    if len(correlation_ranges) > 0:
+        st.write(f"Time Ranges with Correlation Coefficient {'>' if correlation_coefficient > threshold else '<'} {threshold}:")
+        for range_start, range_end in correlation_ranges:
+            st.write(f"{range_start} - {range_end}")
+    else:
+        st.write("No time ranges found with the specified correlation coefficient threshold.")
     
 elif option == 'ISPU':
     # Rest of the code remains the same
