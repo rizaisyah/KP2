@@ -339,6 +339,7 @@ elif option == 'Data Analyst':
     # Compute the correlation matrix
     correlation_matrix = filtered_data.corr()
 
+    st.subheader('Heatmap Analysis')
     # Create a heatmap using seaborn
     fig, ax = plt.subplots(figsize=(10, 8))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', ax=ax)
