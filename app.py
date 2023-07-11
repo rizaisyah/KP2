@@ -204,7 +204,7 @@ elif option == 'ISPU':
                 bar.color = colors[i]
                 bar.hovertemplate = f'ISPU Category: {labels[i]}<br>Mean ISPU Value: %{{y}}'
 
-st.plotly_chart(fig)
+            st.plotly_chart(fig)
 
 elif option == 'Download':
     import streamlit as st
