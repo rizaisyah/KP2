@@ -286,7 +286,20 @@ elif option == 'Data Analyst':
     st.pyplot(fig)
     # Additional data analysis and visualizations can be added here
 
+    # Compute the correlation matrix
+    correlation_matrix = data.corr()
 
+    # Create a heatmap using seaborn
+    fig, ax = plt.subplots(figsize=(10, 8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', ax=ax)
+
+    # Set the title and labels
+    plt.title('Correlation Matrix')
+    plt.xlabel('Variables')
+    plt.ylabel('Variables')
+
+    # Display the plot in Streamlit app
+    st.pyplot(fig)
 
     # Additional data analysis and visualizations can be added here
 
