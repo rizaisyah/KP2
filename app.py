@@ -19,7 +19,7 @@ logo1_image = "Lambang UGM-putih.png"
 logo2_image = "DLH.png"
 
 # Create three columns for the logos
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 
 # Display the logo images in each column
 with col1:
