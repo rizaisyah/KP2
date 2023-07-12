@@ -24,17 +24,10 @@ if option == 'Introduction':
     st.video(video_link)
 
 elif option == 'Tools':
-    # Display tools content
-    st.title('Tools')
-    st.write('Choose a tool from the options below.')
-
-    selected_tool = st.selectbox('Select Tool', ('Correlation visualization', 'ISPU calculation', 'Download', 'Analyze in advance'))
-
-    if selected_tool == 'Correlation Visualization':
-        data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
-        data['Waktu'] = pd.to_datetime(data['Waktu'])
-        # Display correlation tool
-        st.write('Correlation tool selected')
+        # Display tools content
+        st.title('Tools')
+        st.write('Choose a tool from the options below.')
+         st.write('Correlation tool selected')
         # Select pollutant columns (B to H) and meteorology columns (I to P)
         pollutant_columns = data.columns[1:8]
         meteorology_columns = data.columns[8:16]
@@ -133,9 +126,6 @@ elif option == 'Tools':
         st.write("Correlation Coefficient:", correlation_coefficient)
 
     
-    
-    elif selected_tool == 'ISPU':
-        # Display ISPU tool
         st.write('ISPU tool selected')
     
         data['Waktu'] = pd.to_datetime(data['Waktu'])
@@ -262,8 +252,7 @@ elif option == 'Tools':
     
                 st.plotly_chart(fig)
                 
-    elif selected_tool == 'Analyze in Advance':
-        # Display ISPU tool
+
         st.write('ISPU tool selected')
         st.header('Data Analysis')
 
@@ -343,7 +332,7 @@ elif option == 'Tools':
         # Additional data analysis and visualizations can be added here
 
     
-elif option == 'Download':
+elif option == 'Download Resource ':
         # Load data from CSV file
         data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
         data['Waktu'] = pd.to_datetime(data['Waktu'])
