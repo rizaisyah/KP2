@@ -263,7 +263,7 @@ elif option == 'Tools':
     elif selected_tool == 'Analyze in Advance':
         # Display ISPU tool
         st.write('ISPU tool selected')
-            st.header('Data Analysis')
+        st.header('Data Analysis')
 
         # Date range selection
         start_date = st.date_input('Start Date', value=data['Waktu'].min().to_pydatetime().date())
