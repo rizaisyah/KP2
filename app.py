@@ -386,6 +386,35 @@ elif option == 'Download Resources':
                 mime="text/csv")
 
 
+        # ThingSpeak channel details
+        channel_id = '2078878'
+        read_api_key = 'G4V4DRXXZXIS0PSY'
+        
+        # ThingSpeak API endpoint
+        api_endpoint = f'https://api.thingspeak.com/channels/{channel_id}/feeds.json'
+        
+        # Number of data points to fetch
+        num_points = 100
+        
+        # Fetch data from ThingSpeak
+        params = {'api_key': read_api_key, 'results': num_points}
+        response = requests.get(api_endpoint, params=params)
+        
+        # Parse the JSON response
+        data = response.json()
+        feeds = data['feeds']
+        
+        # Convert the feeds to a pandas DataFrame
+        df = pd.DataFrame(feeds)
+        
+        # Display the data in Streamlit
+        st.title('ThingSpeak Data')
+        st.dataframe(df)
+        
+        # Rest of your Streamlit app code...
+
+
+
 
 
     
