@@ -400,6 +400,13 @@ elif option == 'Download Resources':
         params = {'api_key': read_api_key, 'results': num_points}
         response = requests.get(api_endpoint, params=params)
         
+        # Number of data points to fetch
+        num_points = 100
+        
+        # Fetch data from ThingSpeak
+        params = {'api_key': read_api_key, 'results': num_points}
+        response = requests.get(api_endpoint, params=params)
+        
         # Parse the JSON response
         data = response.json()
         feeds = data['feeds']
@@ -407,12 +414,16 @@ elif option == 'Download Resources':
         # Convert the feeds to a pandas DataFrame
         df = pd.DataFrame(feeds)
         
-        # Display the data in Streamlit
-        st.title('ThingSpeak Data')
-        st.dataframe(df)
+        # Plot the graph using Matplotlib
+        plt.plot(df['created_at'], df['field1'])
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.title('ThingSpeak Data')
+        plt.xticks(rotation=45)
         
-        # Rest of your Streamlit app code...
-
+        # Display the graph in Streamlit
+        st.title('ThingSpeak Data')
+        st.pyplot(plt)
 
 
 
