@@ -27,7 +27,7 @@ elif option == 'Tools':
         # Display tools content
         st.title('Tools')
         st.write('Choose a tool from the options below.')
-         st.write('Correlation tool selected')
+        st.write('Correlation tool selected')
         # Select pollutant columns (B to H) and meteorology columns (I to P)
         pollutant_columns = data.columns[1:8]
         meteorology_columns = data.columns[8:16]
