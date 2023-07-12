@@ -9,6 +9,14 @@ from pytube import YouTube
 from PIL import Image
 import requests
 from io import BytesIO
+import streamlit as st
+
+# Display the logo image
+logo_image = "Lambang UGM-putih.png"
+st.image(logo_image, width=200)  # Adjust the width as per your preference
+
+# Rest of your Streamlit app code...
+
 
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
