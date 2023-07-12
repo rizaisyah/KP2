@@ -383,23 +383,24 @@ elif option == 'Real-time':
         # Convert timestamp column to datetime format
         df['created_at'] = pd.to_datetime(df['created_at'])
         
-        # Create a figure and axis objects
-        fig, ax = plt.subplots()
-        
         # Plot the graph using Matplotlib
+        fig, ax = plt.subplots()
         ax.plot(df['created_at'], df['field1'])
-        ax.set_xlabel('Time')
-        ax.set_ylabel('Value')
-        ax.set_title('ThingSpeak Data')
-        
-        # Format x-axis labels
         ax.xaxis.set_major_locator(mdates.AutoDateLocator())
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.title('ThingSpeak Data')
         plt.xticks(rotation=45)
         
         # Display the graph in Streamlit
         st.title('ThingSpeak Data')
         st.pyplot(fig)
+        
+        # Show the latest data in a table
+        st.header('Latest Data')
+        latest_data = df.tail(1)
+        st.dataframe(latest_data)
         
         # Provide an option to show the table
         show_table = st.checkbox('Show Table')
