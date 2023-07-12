@@ -12,11 +12,23 @@ from io import BytesIO
 import streamlit as st
 
 # Display the logo image
-logo_image = "Lambang UGM-putih.png"
+logo_image = ""
 st.image(logo_image, width=200)  # Adjust the width as per your preference
 
 # Rest of your Streamlit app code...
+# Define the paths or URLs of your logo images
+logo1_image = "Lambang UGM-putih.png"
+logo2_image = "DLH.png"
 
+# Create three columns for the logos
+col1, col2 = st.beta_columns(3)
+
+# Display the logo images in each column
+with col1:
+    st.image(logo1_image, width=100)  # Adjust the width as per your preference
+
+with col2:
+    st.image(logo2_image, width=100)  # Adjust the width as per your preference
 
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
