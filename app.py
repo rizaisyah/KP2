@@ -11,9 +11,7 @@ import requests
 from io import BytesIO
 import streamlit as st
 
-# Display the logo image
-logo_image = ""
-st.image(logo_image, width=200)  # Adjust the width as per your preference
+
 
 # Rest of your Streamlit app code...
 # Define the paths or URLs of your logo images
@@ -21,7 +19,7 @@ logo1_image = "Lambang UGM-putih.png"
 logo2_image = "DLH.png"
 
 # Create three columns for the logos
-col1, col2 = st.beta_columns(3)
+col1, col2 = st.beta_columns(2)
 
 # Display the logo images in each column
 with col1:
