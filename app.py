@@ -31,6 +31,8 @@ elif option == 'Tools':
     selected_tool = st.selectbox('Select Tool', ('Correlation visualization', 'ISPU calculation', 'Download', 'Analyze in advance'))
 
     if selected_tool == 'Correlation Visualization':
+        data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
+        data['Waktu'] = pd.to_datetime(data['Waktu'])
         # Display correlation tool
         st.write('Correlation tool selected')
         # Select pollutant columns (B to H) and meteorology columns (I to P)
