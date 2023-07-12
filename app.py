@@ -13,7 +13,7 @@ from io import BytesIO
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
 data['Waktu'] = pd.to_datetime(data['Waktu'])
-option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis Tool', 'Download Resources'))
+option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tool', 'Download Resources'))
 if option == 'Introduction':
     # Display introduction content
     st.title('Welcome to the Streamlit App')
