@@ -16,8 +16,8 @@ data['Waktu'] = pd.to_datetime(data['Waktu'])
 option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tools', 'Download Resources'))
 if option == 'Introduction':
     # Display introduction content
-    st.title('Welcome to the Streamlit App')
-    st.write('This app provides an introduction to Streamlit and its features.')
+    st.title('Welcome to Air Pollution Pattern System')
+    st.write('This app provides an introduction to air quality monitoring system and its features.')
     st.write('Feel free to explore the different options in the sidebar.')
         # YouTube video link
     video_link = "https://www.youtube.com/watch?v=OBCuZGLKygg"
