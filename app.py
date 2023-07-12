@@ -22,7 +22,7 @@ if option == 'Introduction':
         # YouTube video link
     video_link = "https://www.youtube.com/watch?v=OBCuZGLKygg"
     st.video(video_link)
-elif option == 'ISPU tool'
+elif option == 'ISPU tool':
         st.write('ISPU tool selected')
     
         data['Waktu'] = pd.to_datetime(data['Waktu'])
