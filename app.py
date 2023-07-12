@@ -28,16 +28,6 @@ with col1:
 with col2:
     st.image(logo2_image, width=100)  # Adjust the width as per your preference
 
-padding = 10
-
-# Display the logo images in each column with adjusted padding
-with col1:
-    st.image(logo1_image, width=100, output_format='PNG', use_column_width=True)
-    st.markdown("<p style='margin-bottom: 0px;'></p>", unsafe_allow_html=True)
-
-with col2:
-    st.image(logo2_image, width=100, output_format='PNG', use_column_width=True)
-    st.markdown("<p style='margin-bottom: 0px;'></p>", unsafe_allow_html=True)
 
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
