@@ -366,15 +366,14 @@ elif option == 'Download':
         # Display filtered DataFrame
         st.write(filtered_data)
 
-    # Download CSV file
-    if st.button('Download CSV'):
-        csv_data = filtered_data.to_csv(index=False)
-        st.download_button(
-            label="Download CSV",
-            data=csv_data,
-            file_name="filtered_data.csv",
-            mime="text/csv"
-        )
+        # Download CSV file
+        if st.button('Download CSV'):
+            csv_data = filtered_data.to_csv(index=False)
+            st.download_button(
+                label="Download CSV",
+                data=csv_data,
+                file_name="filtered_data.csv",
+                mime="text/csv")
 
 
 
