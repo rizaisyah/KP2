@@ -364,6 +364,7 @@ elif option == 'Real-time':
          # Fetch data from ThingSpeak
         params = {'api_key': read_api_key, 'results': num_points}
         response = requests.get(api_endpoint, params=params)       
+
         # Parse the JSON response
         data = response.json()
         feeds = data['feeds']
@@ -371,18 +372,27 @@ elif option == 'Real-time':
         # Convert the feeds to a pandas DataFrame
         df = pd.DataFrame(feeds)
         
+        # Convert timestamp column to datetime format
+        df['created_at'] = pd.to_datetime(df['created_at'])
+        
+        # Create a figure and axis objects
+        fig, ax = plt.subplots()
+        
         # Plot the graph using Matplotlib
-        plt.plot(df['created_at'], df['field1'])
-        plt.xlabel('Time')
-        plt.ylabel('Value')
-        plt.title('ThingSpeak Data')
+        ax.plot(df['created_at'], df['field1'])
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Value')
+        ax.set_title('ThingSpeak Data')
+        
+        # Format x-axis labels
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
         plt.xticks(rotation=45)
         
         # Display the graph in Streamlit
         st.title('ThingSpeak Data')
-        st.pyplot(plt)
-
-
+        st.pyplot(fig)
+        
         # Provide an option to show the table
         show_table = st.checkbox('Show Table')
         if show_table:
