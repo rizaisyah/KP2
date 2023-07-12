@@ -32,7 +32,7 @@ with col2:
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
 data['Waktu'] = pd.to_datetime(data['Waktu'])
-option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tools', 'Download Resources'))
+option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tools', 'Real-time', 'Download Resources'))
 if option == 'Introduction':
     # Display introduction content
     st.title('Welcome to Air Pollution Pattern System')
@@ -350,7 +350,61 @@ elif option == 'Analysis tools':
     
         # Additional data analysis and visualizations can be added here
 
-    
+elif option == 'Real-time':
+            # ThingSpeak channel details
+        channel_id = '2078878'
+        read_api_key = 'G4V4DRXXZXIS0PSY'
+        
+        # ThingSpeak API endpoint
+        api_endpoint = f'https://api.thingspeak.com/channels/{channel_id}/feeds.json'
+        
+        # Number of data points to fetch
+        num_points = 100
+        
+        # Fetch data from ThingSpeak
+        params = {'api_key': read_api_key, 'results': num_points}
+        response = requests.get(api_endpoint, params=params)
+        
+        # Number of data points to fetch
+        num_points = 100
+        
+        # Fetch data from ThingSpeak
+        params = {'api_key': read_api_key, 'results': num_points}
+        response = requests.get(api_endpoint, params=params)
+        
+        # Parse the JSON response
+        data = response.json()
+        feeds = data['feeds']
+        
+        # Convert the feeds to a pandas DataFrame
+        df = pd.DataFrame(feeds)
+        
+        # Convert timestamp column to datetime format
+        df['created_at'] = pd.to_datetime(df['created_at'])
+        
+        # Create a figure and axis objects
+        fig, ax = plt.subplots()
+        
+        # Plot the graph using Matplotlib
+        ax.plot(df['created_at'], df['field1'])
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Value')
+        ax.set_title('ThingSpeak Data')
+        
+        # Format x-axis labels
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+        plt.xticks(rotation=45)
+        
+        # Display the graph in Streamlit
+        st.title('ThingSpeak Data')
+        st.pyplot(fig)
+        
+        # Provide an option to show the table
+        show_table = st.checkbox('Show Table')
+        if show_table:
+            st.write(df)
+
 elif option == 'Download Resources':
         # Load data from CSV file
         data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
@@ -385,45 +439,6 @@ elif option == 'Download Resources':
                 file_name="filtered_data.csv",
                 mime="text/csv")
 
-
-        # ThingSpeak channel details
-        channel_id = '2078878'
-        read_api_key = 'G4V4DRXXZXIS0PSY'
-        
-        # ThingSpeak API endpoint
-        api_endpoint = f'https://api.thingspeak.com/channels/{channel_id}/feeds.json'
-        
-        # Number of data points to fetch
-        num_points = 100
-        
-        # Fetch data from ThingSpeak
-        params = {'api_key': read_api_key, 'results': num_points}
-        response = requests.get(api_endpoint, params=params)
-        
-        # Number of data points to fetch
-        num_points = 100
-        
-        # Fetch data from ThingSpeak
-        params = {'api_key': read_api_key, 'results': num_points}
-        response = requests.get(api_endpoint, params=params)
-        
-        # Parse the JSON response
-        data = response.json()
-        feeds = data['feeds']
-        
-        # Convert the feeds to a pandas DataFrame
-        df = pd.DataFrame(feeds)
-        
-        # Plot the graph using Matplotlib
-        plt.plot(df['created_at'], df['field1'])
-        plt.xlabel('Time')
-        plt.ylabel('Value')
-        plt.title('ThingSpeak Data')
-        plt.xticks(rotation=45)
-        
-        # Display the graph in Streamlit
-        st.title('ThingSpeak Data')
-        st.pyplot(plt)
 
 
 
