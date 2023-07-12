@@ -351,7 +351,8 @@ elif option == 'Analysis tools':
         # Additional data analysis and visualizations can be added here
 
 elif option == 'Real-time':
-            # ThingSpeak channel details
+        import matplotlib.dates as mdates
+        # ThingSpeak channel details
         channel_id = '2078878'
         read_api_key = 'G4V4DRXXZXIS0PSY'
         
