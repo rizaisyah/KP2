@@ -332,7 +332,7 @@ elif option == 'Tools':
         # Additional data analysis and visualizations can be added here
 
     
-elif option == 'Download Resource ':
+elif option == 'Download Resources':
         # Load data from CSV file
         data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
         data['Waktu'] = pd.to_datetime(data['Waktu'])
