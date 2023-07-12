@@ -362,45 +362,95 @@ elif option == 'Real-time':
         # Number of data points to fetch
         num_points = 100
         
-        # Fetch data from ThingSpeak
-        params = {'api_key': read_api_key, 'results': num_points}
-        response = requests.get(api_endpoint, params=params)
-        
-        # Number of data points to fetch
-        num_points = 100
-        
-        # Fetch data from ThingSpeak
-        params = {'api_key': read_api_key, 'results': num_points}
-        response = requests.get(api_endpoint, params=params)
-        
-        # Parse the JSON response
-        data = response.json()
-        feeds = data['feeds']
-        
-        # Convert the feeds to a pandas DataFrame
-        df = pd.DataFrame(feeds)
-        
-        # Convert timestamp column to datetime format
-        df['created_at'] = pd.to_datetime(df['created_at'])
-        
-        # Plot the graph using Matplotlib
+         # Initialize the graph
         fig, ax = plt.subplots()
-        ax.plot(df['created_at'], df['field1'])
+        ax.set_xlabel('Time')
+        ax.set_ylabel('Value')
+        ax.set_title('ThingSpeak Data')
         ax.xaxis.set_major_locator(mdates.AutoDateLocator())
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
-        plt.xlabel('Time')
-        plt.ylabel('Value')
-        plt.title('ThingSpeak Data')
-        plt.xticks(rotation=45)
         
-        # Display the graph in Streamlit
+        # Fetch and plot the initial data
+        def fetch_and_plot_data():
+            # Fetch data from ThingSpeak
+            params = {'api_key': read_api_key, 'results': num_points}
+            response = requests.get(api_endpoint, params=params)
+        
+            # Parse the JSON response
+            data = response.json()
+            feeds = data['feeds']
+        
+            # Convert the feeds to a pandas DataFrame
+            df = pd.DataFrame(feeds)
+        
+            # Plot the graph
+            ax.clear()
+            ax.plot(df['created_at'], df['field1'])
+            ax.set_xticklabels(df['created_at'], rotation=45)
+            ax.set_title('ThingSpeak Data')
+            ax.set_xlabel('Time')
+            ax.set_ylabel('Value')
+            ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+        
+            # Show the latest data point on the graph
+            latest_data = df.tail(1)
+            latest_time = latest_data['created_at'].values[0]
+            latest_value = latest_data['field1'].values[0]
+            ax.plot(latest_time, latest_value, 'ro', label='Latest Data')
+            ax.legend()
+        
+            # Display the updated graph in Streamlit
+            st.pyplot(fig)
+        
+        # Update the graph every second
+        fetch_and_plot_data()  # Fetch and plot the initial data
+        interval_seconds = 1
         st.title('ThingSpeak Data')
         st.pyplot(fig)
         
-        # Show the latest data in a table
-        st.header('Latest Data')
-        latest_data = df.tail(1)
-        st.dataframe(latest_data)
+        # Fetch and plot the updated data every second
+        while True:
+            fetch_and_plot_data()
+            time.sleep(interval_seconds       # Fetch data from ThingSpeak
+                params = {'api_key': read_api_key, 'results': num_points}
+                response = requests.get(api_endpoint, params=params)
+                
+                # Number of data points to fetch
+                num_points = 100
+                
+                # Fetch data from ThingSpeak
+                params = {'api_key': read_api_key, 'results': num_points}
+                response = requests.get(api_endpoint, params=params)
+                
+                # Parse the JSON response
+                data = response.json()
+                feeds = data['feeds']
+                
+                # Convert the feeds to a pandas DataFrame
+                df = pd.DataFrame(feeds)
+                
+                # Convert timestamp column to datetime format
+                df['created_at'] = pd.to_datetime(df['created_at'])
+                
+                # Plot the graph using Matplotlib
+                fig, ax = plt.subplots()
+                ax.plot(df['created_at'], df['field1'])
+                ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+                ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
+                plt.xlabel('Time')
+                plt.ylabel('Value')
+                plt.title('ThingSpeak Data')
+                plt.xticks(rotation=45)
+                
+                # Display the graph in Streamlit
+                st.title('ThingSpeak Data')
+                st.pyplot(fig)
+                
+                # Show the latest data in a table
+                st.header('Latest Data')
+                latest_data = df.tail(1)
+                st.dataframe(latest_data)
         
         # Provide an option to show the table
         show_table = st.checkbox('Show Table')
