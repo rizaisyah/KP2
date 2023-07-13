@@ -237,21 +237,14 @@ elif option == 'ISPU tool':
                 # Display the bar chart
                 st.plotly_chart(fig)
 
-                categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
-                
-                # Create ISPU category columns for each particle
-                data['ISPU_PM2p5'] = pd.cut(data['PM2p5'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                data['ISPU_PM10'] = pd.cut(data['PM10'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                data['ISPU_SO2'] = pd.cut(data['SO2'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                data['ISPU_CO'] = pd.cut(data['CO'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                data['ISPU_O3'] = pd.cut(data['O3'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                data['ISPU_NO2'] = pd.cut(data['NO2'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
-                
                 # Loop through each particle for visualization
                 particles = ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
                 for particle in particles:
+                    # Create ISPU category columns for each particle
+                    filtered_data[f'ISPU_{particle}'] = pd.cut(filtered_data[particle], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
+                
                     # Get the frequencies of each ISPU category
-                    frequencies = data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
+                    frequencies = filtered_data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
                 
                     # Create a bar plot of the frequencies
                     plt.figure(figsize=(8, 6))
@@ -260,7 +253,7 @@ elif option == 'ISPU tool':
                     # Set the plot labels and title
                     plt.xlabel('ISPU Category')
                     plt.ylabel('Frequency')
-                    plt.title(f'Frequency of {particle} by ISPU Category')
+                    plt.title(f'Frequency of {particle} by ISPU Category (Date Range: {start_date} - {end_date})')
                 
                     # Display the plot
                     st.pyplot(plt)
