@@ -365,6 +365,12 @@ elif option == 'Analysis tools':
             plt.title(f'Distribution of {var} (Standard Deviation: {std_value:.2f})')
             st.pyplot(plt)
 
+            std_values = data.std()
+            
+            # Display the standard deviation in Streamlit
+            st.title('Standard Deviation of Particle Variables')
+            st.write(std_values)
+
 elif option == 'Real-time':
         import matplotlib.dates as mdates
         # ThingSpeak channel details
