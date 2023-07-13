@@ -185,34 +185,58 @@ elif option == 'ISPU tool':
 
                 st.plotly_chart(fig)
 
-                import plotly.graph_objects as go
-                
-                # Create a DataFrame with the standard deviation values
-                std_data = pd.DataFrame({'Particle': pollutants, 'Standard Deviation': std_values})
-                
-                # Define ISPU categories
-                categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
+                # Calculate the standard deviation ISPU for each pollutant
+                std_ISPU_PM2p5 = filtered_data['ISPU_PM2p5'].std()
+                std_ISPU_PM10 = filtered_data['ISPU_PM10'].std()
+                std_ISPU_SO2 = filtered_data['ISPU_SO2'].std()
+                std_ISPU_CO = filtered_data['ISPU_CO'].std()
+                std_ISPU_O3 = filtered_data['ISPU_O3'].std()
+                std_ISPU_NO2 = filtered_data['ISPU_NO2'].std()
+                std_ISPU_HC = filtered_data['ISPU_HC'].std()
                 
                 # Create a bar chart
-                fig = go.Figure(data=[go.Bar(x=categories, y=std_data['Standard Deviation'], marker=dict(color='blue'))])
+                pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
+                mean_ISPU_values = [mean_ISPU_PM2p5, mean_ISPU_PM10, mean_ISPU_SO2, mean_ISPU_CO, mean_ISPU_O3, mean_ISPU_NO2, mean_ISPU_HC]
+                std_ISPU_values = [std_ISPU_PM2p5, std_ISPU_PM10, std_ISPU_SO2, std_ISPU_CO, std_ISPU_O3, std_ISPU_NO2, std_ISPU_HC]
+                
+                # Define color for the bars
+                bar_color = 'blue'
+                
+                fig = go.Figure()
+                fig.add_trace(go.Bar(
+                    x=pollutants,
+                    y=mean_ISPU_values,
+                    marker=dict(color=bar_color),
+                    name='Mean ISPU'
+                ))
+                fig.add_trace(go.Bar(
+                    x=pollutants,
+                    y=std_ISPU_values,
+                    marker=dict(color=bar_color),
+                    opacity=0.5,
+                    name='Standard Deviation'
+                ))
+                
                 fig.update_layout(
-                    title='Standard Deviation of Particle Data',
-                    xaxis_title='ISPU Categories',
-                    yaxis_title='Standard Deviation'
+                    title='Mean ISPU Values and Standard Deviation for Pollutants',
+                    xaxis_title='Pollutants',
+                    yaxis_title='ISPU'
                 )
                 
                 # Add labels to the bars
-                for i, value in enumerate(std_data['Standard Deviation']):
+                for i, value in enumerate(mean_ISPU_values):
                     fig.add_annotation(
-                        x=categories[i],
+                        x=pollutants[i],
                         y=value,
-                        text=str(value),
+                        text=labels[i],
                         showarrow=False,
                         font=dict(color='black', size=12),
-                        yshift=10
-                    )
+                        yshift=10 if value > 300 else -20
+                )
                 
                 # Display the bar chart
+                st.plotly_chart(fig)
+
                 st.plotly_chart(fig)
             
 elif option == 'Analysis tools':
