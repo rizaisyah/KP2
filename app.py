@@ -183,7 +183,7 @@ elif option == 'ISPU tool':
                     yaxis_title='Standard Deviation'
                 )
 
-st.plotly_chart(fig)
+                st.plotly_chart(fig)
                 
 elif option == 'Analysis tools':
         # Display tools content
