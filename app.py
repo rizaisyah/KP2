@@ -185,20 +185,16 @@ elif option == 'ISPU tool':
 
                 st.plotly_chart(fig)
 
-                import pandas as pd
                 import plotly.graph_objects as go
-                import streamlit as st
                 
-                # Define ISPU categories and pollutants
-                ispu_categories = ['ISPU_PM2p5', 'ISPU_PM10', 'ISPU_SO2', 'ISPU_CO', 'ISPU_O3', 'ISPU_NO2', 'ISPU_HC']
-                pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
-                labels = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
+                # Create a DataFrame with the standard deviation values
+                std_data = pd.DataFrame({'Particle': pollutants, 'Standard Deviation': std_values})
                 
-                # Calculate the standard deviation for each ISPU category
-                std_values = [filtered_data[category].std() for category in ispu_categories]
+                # Define ISPU categories
+                categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
                 
-                # Create a bar chart for standard deviation
-                fig = go.Figure(data=[go.Bar(x=labels, y=std_values, marker=dict(color='blue'))])
+                # Create a bar chart
+                fig = go.Figure(data=[go.Bar(x=categories, y=std_data['Standard Deviation'], marker=dict(color='blue'))])
                 fig.update_layout(
                     title='Standard Deviation of Particle Data',
                     xaxis_title='ISPU Categories',
@@ -206,18 +202,19 @@ elif option == 'ISPU tool':
                 )
                 
                 # Add labels to the bars
-                for i, value in enumerate(std_values):
+                for i, value in enumerate(std_data['Standard Deviation']):
                     fig.add_annotation(
-                        x=labels[i],
+                        x=categories[i],
                         y=value,
-                        text=f'{value:.2f}',
+                        text=str(value),
                         showarrow=False,
                         font=dict(color='black', size=12),
                         yshift=10
                     )
                 
+                # Display the bar chart
                 st.plotly_chart(fig)
-                
+            
 elif option == 'Analysis tools':
         # Display tools content
         st.title('Tools')
