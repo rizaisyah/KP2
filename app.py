@@ -167,6 +167,23 @@ elif option == 'ISPU tool':
                     )
     
                 st.plotly_chart(fig)
+
+                # Define ISPU categories and pollutants
+                ispu_categories = ['ISPU_PM2p5', 'ISPU_PM10', 'ISPU_SO2', 'ISPU_CO', 'ISPU_O3', 'ISPU_NO2', 'ISPU_HC']
+                pollutants = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']
+                
+                # Calculate the standard deviation for each ISPU category
+                std_values = [filtered_data[category].std() for category in ispu_categories]
+                
+                # Create a bar chart for standard deviation
+                fig = go.Figure(data=[go.Bar(x=pollutants, y=std_values, marker=dict(color='blue'))])
+                fig.update_layout(
+                    title='Standard Deviation of ISPU Categories',
+                    xaxis_title='Pollutants',
+                    yaxis_title='Standard Deviation'
+                )
+
+st.plotly_chart(fig)
                 
 elif option == 'Analysis tools':
         # Display tools content
@@ -365,11 +382,7 @@ elif option == 'Analysis tools':
             plt.title(f'Distribution of {var} (Standard Deviation: {std_value:.2f})')
             st.pyplot(plt)
 
-            std_values = data.std()
-            
-            # Display the standard deviation in Streamlit
-            st.title('Standard Deviation of Particle Variables')
-            st.write(std_values)
+
 
 elif option == 'Real-time':
         import matplotlib.dates as mdates
