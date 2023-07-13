@@ -349,19 +349,21 @@ elif option == 'Analysis tools':
         st.pyplot(fig)
     
         # Additional data analysis and visualizations can be added here
-        # Calculate the standard deviation for each particle variable
-        std_data = data[['PM10', 'PM2p5', 'SO2', 'CO', 'O3', 'NO2', 'HC']].std()
+        # List of particle variables
+        particle_vars = ['PM10', 'PM2p5', 'SO2', 'CO', 'O3', 'NO2', 'HC']
         
-        # Create separate plots for each particle variable
-        for particle in std_data.index:
+        # Create a separate visualization for each particle variable
+        for var in particle_vars:
+            # Calculate the standard deviation for the current particle variable
+            std_value = data[var].std()
+            
+            # Create a plot for the current particle variable
             plt.figure(figsize=(8, 6))
-            plt.plot(data.index, data[particle], marker='o')
-            plt.xlabel('Time')
-            plt.ylabel(particle)
-            plt.title(f'{particle} Time-Series')
-            plt.xticks(rotation=45)
+            plt.hist(data[var], bins=20)
+            plt.xlabel(var)
+            plt.ylabel('Frequency')
+            plt.title(f'Distribution of {var} (Standard Deviation: {std_value:.2f})')
             st.pyplot(plt)
-            plt.close()
 
 elif option == 'Real-time':
         import matplotlib.dates as mdates
