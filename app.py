@@ -237,11 +237,10 @@ elif option == 'ISPU tool':
                 # Display the bar chart
                 st.plotly_chart(fig)
 
-                # Define the ISPU categories
                 categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
                 
                 # Create ISPU category columns for each particle
-                data['ISPU_PM2.5'] = pd.cut(data['PM2.5'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
+                data['ISPU_PM2p5'] = pd.cut(data['PM2p5'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
                 data['ISPU_PM10'] = pd.cut(data['PM10'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
                 data['ISPU_SO2'] = pd.cut(data['SO2'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
                 data['ISPU_CO'] = pd.cut(data['CO'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
@@ -249,7 +248,7 @@ elif option == 'ISPU tool':
                 data['ISPU_NO2'] = pd.cut(data['NO2'], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories)
                 
                 # Loop through each particle for visualization
-                particles = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
+                particles = ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
                 for particle in particles:
                     # Get the frequencies of each ISPU category
                     frequencies = data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
@@ -265,7 +264,6 @@ elif option == 'ISPU tool':
                 
                     # Display the plot
                     st.pyplot(plt)
-
             
 elif option == 'Analysis tools':
         # Display tools content
