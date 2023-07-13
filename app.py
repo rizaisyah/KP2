@@ -233,7 +233,20 @@ elif option == 'ISPU tool':
                         font=dict(color='black', size=12),
                         yshift=10 if value > 300 else -20
                 )
+
+                # Define the ISPU categories
+                categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
                 
+                # Date range selection
+                start_date = st.date_input('Start Date')
+                end_date = st.date_input('End Date')
+                
+                # Convert start_date and end_date to datetime objects
+                start_datetime = pd.to_datetime(start_date)
+                end_datetime = pd.to_datetime(end_date)
+                
+                # Filter data based on date range
+                filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)].copy()
                 particles = ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
                 for particle in particles:
                     # Create ISPU category column for the particle
