@@ -242,6 +242,7 @@ elif option == 'ISPU tool':
                 
                 # Filter data based on date range
                 filtered_data = data[(data['Waktu'] >= start_datetime) & (data['Waktu'] <= end_datetime)].copy()
+                # Loop through each particle for visualization
                 particles = ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
                 for particle in particles:
                     # Create ISPU category column for the particle
@@ -251,17 +252,17 @@ elif option == 'ISPU tool':
                     frequencies = filtered_data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
                 
                     # Create a bar plot of the frequencies
-                    plt.figure(figsize=(8, 6))
-                    sns.barplot(x=frequencies.index, y=frequencies.values, color='blue')
-                
-                    # Set the plot labels and title
-                    plt.xlabel('ISPU Category')
-                    plt.ylabel('Frequency')
-                    plt.title(f'Frequency of {particle} by ISPU Category (Date Range: {start_date} - {end_date})')
+                    fig = go.Figure(data=go.Bar(x=frequencies.index, y=frequencies.values, marker=dict(color='blue')))
+                    fig.update_layout(
+                        title=f'Frequency of {particle} by ISPU Category (Date Range: {start_date} - {end_date})',
+                        xaxis_title='ISPU Category',
+                        yaxis_title='Frequency'
+                    )
+                    fig.update_traces(hovertemplate='Category: %{x}<br>Frequency: %{y}')
                 
                     # Display the plot
-                    st.pyplot(plt)
-            
+                    st.plotly_chart(fig)
+    
 elif option == 'Analysis tools':
         # Display tools content
         st.title('Tools')
