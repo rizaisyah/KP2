@@ -237,35 +237,28 @@ elif option == 'ISPU tool':
                 # Display the bar chart
                 st.plotly_chart(fig)
 
-                # Define ISPU categories
+                # Define the ISPU categories
                 categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
                 
-                # Create line plots for each particle
-                for particle in ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']:
-                    fig = go.Figure()
-                    
-                    # Iterate over ISPU categories
-                    for i in range(len(categories)-1):
-                        # Filter data based on ISPU category
-                        filtered_data = data[(data[f'ISPU_{particle}'] >= i*50) & (data[f'ISPU_{particle}'] < (i+1)*50)]
-                        
-                        # Add line plot for the ISPU category
-                        fig.add_trace(go.Scatter(
-                            x=filtered_data[f'ISPU_{particle}'],
-                            y=filtered_data[particle],
-                            mode='lines',
-                            name=f'{categories[i]} - {categories[i+1]}'
-                        ))
-                    
-                    # Configure plot layout
-                    fig.update_layout(
-                        title=f'{particle} Particle Values by ISPU Category',
-                        xaxis_title='ISPU Category',
-                        yaxis_title=f'{particle} Particle Value'
-                    )
-                    
-                    # Display the line plot
-                    st.plotly_chart(fig)
+                # Define the particles
+                particles = ['PM2.5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
+                
+                # Create a bar chart for each particle
+                for particle in particles:
+                    # Count the frequency of each ISPU category for the current particle
+                    frequencies = data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
+                
+                    # Create the bar chart
+                    fig, ax = plt.subplots()
+                    ax.bar(categories, frequencies)
+                
+                    # Set the chart title and axes labels
+                    ax.set_title(f'Frequency of ISPU Categories for {particle}')
+                    ax.set_xlabel('ISPU Categories')
+                    ax.set_ylabel('Frequency')
+                
+                    # Display the chart
+                    st.pyplot(fig)
 
             
 elif option == 'Analysis tools':
