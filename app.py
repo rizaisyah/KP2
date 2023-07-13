@@ -352,15 +352,16 @@ elif option == 'Analysis tools':
         # Calculate the standard deviation for each particle variable
         std_data = data[['PM10', 'PM2p5', 'SO2', 'CO', 'O3', 'NO2', 'HC']].std()
         
-        # Create the plot
-        plt.figure(figsize=(10, 6))
-        std_data.plot(kind='line', marker='o')
-        plt.xlabel('Particle Variable')
-        plt.ylabel('Standard Deviation')
-        plt.title('Standard Deviation of Particle Variables')
-        
-        # Display the plot in Streamlit
-        st.pyplot(plt)
+        # Create separate plots for each particle variable
+        for particle in std_data.index:
+            plt.figure(figsize=(8, 6))
+            plt.plot(data.index, data[particle], marker='o')
+            plt.xlabel('Time')
+            plt.ylabel(particle)
+            plt.title(f'{particle} Time-Series')
+            plt.xticks(rotation=45)
+            st.pyplot(plt)
+            plt.close()
 
 elif option == 'Real-time':
         import matplotlib.dates as mdates
