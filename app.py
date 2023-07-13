@@ -234,11 +234,10 @@ elif option == 'ISPU tool':
                         yshift=10 if value > 300 else -20
                 )
                 
-                # Loop through each particle for visualization
                 particles = ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2']
                 for particle in particles:
                     # Create ISPU category column for the particle
-                    filtered_data[f'ISPU_{particle}'] = pd.cut(filtered_data[particle], bins=[0, 50, 100, 200, 300, float('inf')], labels=categories, right=False)
+                    filtered_data[f'ISPU_{particle}'] = pd.cut(filtered_data[particle].astype(float), bins=[0, 50, 100, 200, 300, float('inf')], labels=categories, right=False)
                 
                     # Get the frequencies of each ISPU category
                     frequencies = filtered_data.groupby(f'ISPU_{particle}').size().reindex(categories, fill_value=0)
