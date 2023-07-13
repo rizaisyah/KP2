@@ -237,7 +237,36 @@ elif option == 'ISPU tool':
                 # Display the bar chart
                 st.plotly_chart(fig)
 
-                st.plotly_chart(fig)
+                # Define ISPU categories
+                categories = ['Sehat', 'Sedang', 'Tidak Sehat', 'Sangat Tidak Sehat', 'Berbahaya']
+                
+                # Create line plots for each particle
+                for particle in ['PM2p5', 'PM10', 'SO2', 'CO', 'O3', 'NO2', 'HC']:
+                    fig = go.Figure()
+                    
+                    # Iterate over ISPU categories
+                    for i in range(len(categories)-1):
+                        # Filter data based on ISPU category
+                        filtered_data = data[(data[f'ISPU_{particle}'] >= i*50) & (data[f'ISPU_{particle}'] < (i+1)*50)]
+                        
+                        # Add line plot for the ISPU category
+                        fig.add_trace(go.Scatter(
+                            x=filtered_data[f'ISPU_{particle}'],
+                            y=filtered_data[particle],
+                            mode='lines',
+                            name=f'{categories[i]} - {categories[i+1]}'
+                        ))
+                    
+                    # Configure plot layout
+                    fig.update_layout(
+                        title=f'{particle} Particle Values by ISPU Category',
+                        xaxis_title='ISPU Category',
+                        yaxis_title=f'{particle} Particle Value'
+                    )
+                    
+                    # Display the line plot
+                    st.plotly_chart(fig)
+
             
 elif option == 'Analysis tools':
         # Display tools content
