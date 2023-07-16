@@ -590,7 +590,7 @@ elif option == 'Test':
         # Page layout
         st.title("Correlation Line Plot")
         st.write("Upload two different CSV files and select columns for the line plot.")
-        
+    
         # Read data from two different CSV files
         data_list = read_data()
     
@@ -600,8 +600,10 @@ elif option == 'Test':
             st.write(f"Select Data Columns for File {i+1}")
             selected_columns.append(st.multiselect(f"Select Data Columns for File {i+1}", data.columns))
     
-        # Customize x-axis title
+        # Customize legend names, x-axis title, and y-axis title
+        legend_names = [st.text_input(f"Customize Legend Name for File {i+1}", value=f"File {i+1}") for i in range(len(data_list))]
         xaxis_title = st.text_input("Customize X-axis Title", value="Time")
+        yaxis_title = st.text_input("Customize Y-axis Title", value="Value")
     
         # Create the "Create" button
         if st.button("Create"):
@@ -610,13 +612,13 @@ elif option == 'Test':
                 fig = go.Figure()
                 for i, data in enumerate(data_list):
                     col = selected_columns[i][0]
-                    fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=f"File {i+1} - {col}"))
+                    fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=legend_names[i]))
     
                 # Update the layout with title and axis labels
                 fig.update_layout(
                     title='Correlation Line Plots',
                     xaxis_title=xaxis_title,
-                    yaxis_title='Value'
+                    yaxis_title=yaxis_title
                 )
     
                 # Display the line plots
