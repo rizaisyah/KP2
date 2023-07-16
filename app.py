@@ -532,100 +532,105 @@ elif option == 'Test':
     import streamlit as st
     import pandas as pd
     import plotly.graph_objects as go
-    
-    # Function to read data and display file upload widget
-    def read_data():
-        uploaded_file = st.file_uploader("Upload CSV Data", type=["csv"])
-        if uploaded_file is not None:
-            data = pd.read_csv(uploaded_file)
-            st.write(data)
-            return data
-        return None
-    
-    def main():
-        # Page layout
-        st.title("Correlation Line Plot")
-        st.write("Upload a CSV file and select two columns for the line plot.")
-    
-        # Read the data from CSV file
-        data = read_data()
-    
-        if data is not None:
-            # Select two columns for the line plot
-            selected_columns = st.multiselect("Select Data Columns", data.columns)
-    
-            if len(selected_columns) == 2:
-                # Create a line plot using Plotly
-                fig = go.Figure()
-                for col in selected_columns:
-                    fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=col))
-    
-                # Update the layout with title and axis labels
-                fig.update_layout(
-                    title='Correlation Line Plot',
-                    xaxis_title=data.columns[0],
-                    yaxis_title='Value'
-                )
-    
-                # Display the line plot
-                st.plotly_chart(fig)
-    
-    if __name__ == "__main__":
-        main()
 
-    import streamlit as st
-    import pandas as pd
-    import plotly.graph_objects as go
+    option = st.radio("Select ISPU Calculation Option:", ('1 file', '2/more files')
+
+    if option == '1 file':
     
-    def read_data():
-        uploaded_files = st.file_uploader("Upload CSV Data", type=["csv"], accept_multiple_files=True)
-        data_list = []
-        for uploaded_file in uploaded_files:
-            data = pd.read_csv(uploaded_file)
-            data_list.append(data)
-            st.write(data)
-        return data_list
-    
-    def main():
-        # Page layout
-        st.title("Correlation Line Plot")
-        st.write("Upload two different CSV files and select columns for the line plot.")
-    
-        # Read data from two different CSV files
-        data_list = read_data()
-    
-        # Select columns for the line plot from each file
-        selected_columns = []
-        for i, data in enumerate(data_list):
-            st.write(f"Select Data Columns for File {i+1}")
-            selected_columns.append(st.multiselect(f"Select Data Columns for File {i+1}", data.columns))
-    
-        # Customize legend names, x-axis title, and y-axis title
-        legend_names = [st.text_input(f"Customize Legend Name for File {i+1}", value=f"File {i+1}") for i in range(len(data_list))]
-        xaxis_title = st.text_input("Customize X-axis Title", value="Time")
-        yaxis_title = st.text_input("Customize Y-axis Title", value="Value")
-    
-        # Create the "Create" button
-        if st.button("Create"):
-            if len(data_list) == 2 and len(selected_columns[0]) == 1 and len(selected_columns[1]) == 1:
-                # Create line plots using Plotly for each file
-                fig = go.Figure()
-                for i, data in enumerate(data_list):
-                    col = selected_columns[i][0]
-                    fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=legend_names[i]))
-    
-                # Update the layout with title and axis labels
-                fig.update_layout(
-                    title='Correlation Line Plots',
-                    xaxis_title=xaxis_title,
-                    yaxis_title=yaxis_title
-                )
-    
-                # Display the line plots
-                st.plotly_chart(fig)
-    
-    if __name__ == "__main__":
-        main()
+        # Function to read data and display file upload widget
+        def read_data():
+            uploaded_file = st.file_uploader("Upload CSV Data", type=["csv"])
+            if uploaded_file is not None:
+                data = pd.read_csv(uploaded_file)
+                st.write(data)
+                return data
+            return None
+        
+        def main():
+            # Page layout
+            st.title("Correlation Line Plot")
+            st.write("Upload a CSV file and select two columns for the line plot.")
+        
+            # Read the data from CSV file
+            data = read_data()
+        
+            if data is not None:
+                # Select two columns for the line plot
+                selected_columns = st.multiselect("Select Data Columns", data.columns)
+        
+                if len(selected_columns) == 2:
+                    # Create a line plot using Plotly
+                    fig = go.Figure()
+                    for col in selected_columns:
+                        fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=col))
+        
+                    # Update the layout with title and axis labels
+                    fig.update_layout(
+                        title='Correlation Line Plot',
+                        xaxis_title=data.columns[0],
+                        yaxis_title='Value'
+                    )
+        
+                    # Display the line plot
+                    st.plotly_chart(fig)
+        
+            if __name__ == "__main__":
+                main()
+                
+    elif option == '2 file/more':
+        import streamlit as st
+        import pandas as pd
+        import plotly.graph_objects as go
+        
+        def read_data():
+            uploaded_files = st.file_uploader("Upload CSV Data", type=["csv"], accept_multiple_files=True)
+            data_list = []
+            for uploaded_file in uploaded_files:
+                data = pd.read_csv(uploaded_file)
+                data_list.append(data)
+                st.write(data)
+            return data_list
+        
+        def main():
+            # Page layout
+            st.title("Correlation Line Plot")
+            st.write("Upload two different CSV files and select columns for the line plot.")
+        
+            # Read data from two different CSV files
+            data_list = read_data()
+        
+            # Select columns for the line plot from each file
+            selected_columns = []
+            for i, data in enumerate(data_list):
+                st.write(f"Select Data Columns for File {i+1}")
+                selected_columns.append(st.multiselect(f"Select Data Columns for File {i+1}", data.columns))
+        
+            # Customize legend names, x-axis title, and y-axis title
+            legend_names = [st.text_input(f"Customize Legend Name for File {i+1}", value=f"File {i+1}") for i in range(len(data_list))]
+            xaxis_title = st.text_input("Customize X-axis Title", value="Time")
+            yaxis_title = st.text_input("Customize Y-axis Title", value="Value")
+        
+            # Create the "Create" button
+            if st.button("Create"):
+                if len(data_list) == 2 and len(selected_columns[0]) == 1 and len(selected_columns[1]) == 1:
+                    # Create line plots using Plotly for each file
+                    fig = go.Figure()
+                    for i, data in enumerate(data_list):
+                        col = selected_columns[i][0]
+                        fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=legend_names[i]))
+        
+                    # Update the layout with title and axis labels
+                    fig.update_layout(
+                        title='Correlation Line Plots',
+                        xaxis_title=xaxis_title,
+                        yaxis_title=yaxis_title
+                    )
+        
+                    # Display the line plots
+                    st.plotly_chart(fig)
+        
+        if __name__ == "__main__":
+            main()
 
 
 
