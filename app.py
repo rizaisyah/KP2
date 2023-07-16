@@ -538,50 +538,37 @@ elif option == 'Test':
         uploaded_file = st.file_uploader("Upload CSV Data", type=["csv"])
         if uploaded_file is not None:
             data = pd.read_csv(uploaded_file)
+            st.write(data)
             return data
         return None
     
-    # Function to create correlation line plot using Plotly
-    def create_correlation_line_plot(data, selected_data1, selected_data2):
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=data['Waktu'], y=data[selected_data1], mode='lines', name=selected_data1))
-        fig.add_trace(go.Scatter(x=data['Waktu'], y=data[selected_data2], mode='lines', name=selected_data2))
-    
-        # Update the layout with titles and y-axis labels
-        fig.update_layout(
-            title=f'Correlation between {selected_data1} and {selected_data2}',
-            xaxis_title='Time',
-            yaxis=dict(title=selected_data1, side='left'),
-            yaxis2=dict(title=selected_data2, side='right')
-        )
-    
-        return fig
-    
-    # Main function
     def main():
-        st.title('Correlation Data Visualization')
+        # Page layout
+        st.title("Correlation Line Plot")
+        st.write("Upload a CSV file and select two columns for the line plot.")
     
-        # Step 1: Upload CSV data
+        # Read the data from CSV file
         data = read_data()
     
         if data is not None:
-            # Step 2: Choose Data 1
-            selected_data1 = st.selectbox('Data 1 - Select Column', data.columns)
+            # Select two columns for the line plot
+            selected_columns = st.multiselect("Select Data Columns", data.columns)
     
-            # Step 3: Choose Data 2
-            selected_data2 = st.selectbox('Data 2 - Select Column', data.columns)
+            if len(selected_columns) == 2:
+                # Create a line plot using Plotly
+                fig = go.Figure()
+                for col in selected_columns:
+                    fig.add_trace(go.Scatter(x=data.iloc[:, 0], y=data[col], mode='lines', name=col))
     
-            # Step 4: Choose Date Range (Optional)
-            if 'Waktu' in data.columns:
-                start_date = st.date_input('Start Date', min_value=data['Waktu'].min().to_pydatetime().date(), max_value=data['Waktu'].max().to_pydatetime().date(), value=data['Waktu'].min().to_pydatetime().date())
-                end_date = st.date_input('End Date', min_value=data['Waktu'].min().to_pydatetime().date(), max_value=data['Waktu'].max().to_pydatetime().date(), value=data['Waktu'].max().to_pydatetime().date())
+                # Update the layout with title and axis labels
+                fig.update_layout(
+                    title='Correlation Line Plot',
+                    xaxis_title=data.columns[0],
+                    yaxis_title='Value'
+                )
     
-                # Filter data based on selected date range
-                data = data[(data['Waktu'] >= pd.to_datetime(start_date)) & (data['Waktu'] <= pd.to_datetime(end_date))]
-    
-            # Step 5: Create Plotly chart
-            fig = create_correlation_line_plot(data, selected_data1, selected_data2)
-            st.plotly_chart(fig)
+                # Display the line plot
+                st.plotly_chart(fig)
     
     if __name__ == "__main__":
         main()
