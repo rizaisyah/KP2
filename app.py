@@ -558,18 +558,21 @@ elif option == 'Test':
             if data:
                 # Select two columns for the line plot
                 selected_columns = st.multiselect("Select Data Columns", data[0].columns)
+                legend_name = st.text_input("Customize Legend Name", value="File 1")
+                xaxis_title = st.text_input("Customize X-axis Title", value="Time")
+                yaxis_title = st.text_input("Customize Y-axis Title", value="Value")
         
                 if len(selected_columns) == 2:
                     # Create a line plot using Plotly
                     fig = go.Figure()
                     for col in selected_columns:
-                        fig.add_trace(go.Scatter(x=data[0].iloc[:, 0], y=data[0][col], mode='lines', name=col))
+                        fig.add_trace(go.Scatter(x=data[0].iloc[:, 0], y=data[0][col], mode='lines', name=legend_name))
         
                     # Update the layout with title and axis labels
                     fig.update_layout(
                         title='Correlation Line Plot',
-                        xaxis_title=data[0].columns[0],
-                        yaxis_title='Value'
+                        xaxis_title=xaxis_title,
+                        yaxis_title=yaxis_title
                     )
         
                     # Display the line plot
