@@ -528,7 +528,7 @@ elif option == 'Download Resources':
                 file_name="filtered_data.csv",
                 mime="text/csv")
 
-elif option == 'Test'
+elif option == 'Test':
     import streamlit as st
     import pandas as pd
     import plotly.graph_objects as go
