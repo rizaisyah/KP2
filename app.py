@@ -600,6 +600,9 @@ elif option == 'Test':
             st.write(f"Select Data Columns for File {i+1}")
             selected_columns.append(st.multiselect(f"Select Data Columns for File {i+1}", data.columns))
     
+        # Customize x-axis title
+        xaxis_title = st.text_input("Customize X-axis Title", value="Time")
+    
         # Create the "Create" button
         if st.button("Create"):
             if len(data_list) == 2 and len(selected_columns[0]) == 1 and len(selected_columns[1]) == 1:
@@ -612,7 +615,7 @@ elif option == 'Test':
                 # Update the layout with title and axis labels
                 fig.update_layout(
                     title='Correlation Line Plots',
-                    xaxis_title=data_list[0].columns[0],
+                    xaxis_title=xaxis_title,
                     yaxis_title='Value'
                 )
     
@@ -621,7 +624,7 @@ elif option == 'Test':
     
     if __name__ == "__main__":
         main()
-    
+
 
 
 
