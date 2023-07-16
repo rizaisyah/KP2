@@ -16,7 +16,7 @@ import streamlit as st
 # Load data
 data = pd.read_csv('19-23 ISPU Kota Yogyakarta.csv')
 data['Waktu'] = pd.to_datetime(data['Waktu'])
-option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tools', 'Real-time', 'Download Resources'))
+option = st.sidebar.selectbox('Select Option', ('Introduction', 'ISPU tool', 'Analysis tools', 'Real-time', 'Download Resources', 'Test'))
 if option == 'Introduction':
     # Display introduction content
     st.title('Welcome to Air Pollution Pattern System')
@@ -527,6 +527,65 @@ elif option == 'Download Resources':
                 data=csv_data,
                 file_name="filtered_data.csv",
                 mime="text/csv")
+
+elif option == 'Test'
+    import streamlit as st
+    import pandas as pd
+    import plotly.graph_objects as go
+    
+    # Function to read data and display file upload widget
+    def read_data():
+        uploaded_file = st.file_uploader("Upload CSV Data", type=["csv"])
+        if uploaded_file is not None:
+            data = pd.read_csv(uploaded_file)
+            return data
+        return None
+    
+    # Function to create correlation line plot using Plotly
+    def create_correlation_line_plot(data, selected_data1, selected_data2):
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=data['Waktu'], y=data[selected_data1], mode='lines', name=selected_data1))
+        fig.add_trace(go.Scatter(x=data['Waktu'], y=data[selected_data2], mode='lines', name=selected_data2))
+    
+        # Update the layout with titles and y-axis labels
+        fig.update_layout(
+            title=f'Correlation between {selected_data1} and {selected_data2}',
+            xaxis_title='Time',
+            yaxis=dict(title=selected_data1, side='left'),
+            yaxis2=dict(title=selected_data2, side='right')
+        )
+    
+        return fig
+    
+    # Main function
+    def main():
+        st.title('Correlation Data Visualization')
+    
+        # Step 1: Upload CSV data
+        data = read_data()
+    
+        if data is not None:
+            # Step 2: Choose Data 1
+            selected_data1 = st.selectbox('Data 1 - Select Column', data.columns)
+    
+            # Step 3: Choose Data 2
+            selected_data2 = st.selectbox('Data 2 - Select Column', data.columns)
+    
+            # Step 4: Choose Date Range (Optional)
+            if 'Waktu' in data.columns:
+                start_date = st.date_input('Start Date', min_value=data['Waktu'].min().to_pydatetime().date(), max_value=data['Waktu'].max().to_pydatetime().date(), value=data['Waktu'].min().to_pydatetime().date())
+                end_date = st.date_input('End Date', min_value=data['Waktu'].min().to_pydatetime().date(), max_value=data['Waktu'].max().to_pydatetime().date(), value=data['Waktu'].max().to_pydatetime().date())
+    
+                # Filter data based on selected date range
+                data = data[(data['Waktu'] >= pd.to_datetime(start_date)) & (data['Waktu'] <= pd.to_datetime(end_date))]
+    
+            # Step 5: Create Plotly chart
+            fig = create_correlation_line_plot(data, selected_data1, selected_data2)
+            st.plotly_chart(fig)
+    
+    if __name__ == "__main__":
+        main()
+
 
 
 
