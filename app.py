@@ -593,7 +593,7 @@ elif option == 'Test':
             legend_names = [st.text_input(f"Customize Legend Name for File {i+1}", value=f"File {i+1}") for i in range(num_files)]
             xaxis_titles = [st.text_input(f"Customize X-axis Title for File {i+1}", value="Time") for i in range(num_files)]
             yaxis_titles = [st.text_input(f"Customize Y-axis Title for File {i+1}", value="Value") for i in range(num_files)]
-            main_title = st.text_input("Customize Main Title", value="Correlation Line Plot")
+            main_title = st.text_input("Customize Main Title", value="Correlation Line Plots")
         
             # Create the "Create" button
             if st.button("Create"):
@@ -608,7 +608,7 @@ elif option == 'Test':
                     # Update the layout with title and axis labels for each file
                     for i in range(num_files):
                         fig.update_layout(
-                            title=f'Correlation Line Plot - File {i+1}',
+                            title=main_title,
                             xaxis_title=xaxis_titles[i],
                             yaxis_title=yaxis_titles[i]
                         )
