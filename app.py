@@ -574,7 +574,7 @@ elif option == 'Test':
                     # Display the line plot
                     st.plotly_chart(fig)
         
-            if __name__ == "__main__":
+        if __name__ == "__main__":
                 main()
                 
     elif option == '2 file/more':
