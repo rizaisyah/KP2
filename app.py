@@ -561,6 +561,7 @@ elif option == 'Test':
                 legend_name = st.text_input("Customize Legend Name", value="File 1")
                 xaxis_title = st.text_input("Customize X-axis Title", value="Time")
                 yaxis_title = st.text_input("Customize Y-axis Title", value="Value")
+                main_title = st.text_input("Customize Main Title", value="Correlation Line Plot")
         
                 if len(selected_columns) == 2:
                     # Create a line plot using Plotly
@@ -592,6 +593,7 @@ elif option == 'Test':
             legend_names = [st.text_input(f"Customize Legend Name for File {i+1}", value=f"File {i+1}") for i in range(num_files)]
             xaxis_titles = [st.text_input(f"Customize X-axis Title for File {i+1}", value="Time") for i in range(num_files)]
             yaxis_titles = [st.text_input(f"Customize Y-axis Title for File {i+1}", value="Value") for i in range(num_files)]
+            main_title = st.text_input("Customize Main Title", value="Correlation Line Plot")
         
             # Create the "Create" button
             if st.button("Create"):
