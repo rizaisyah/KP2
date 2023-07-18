@@ -5,32 +5,38 @@ def main():
 
     # Menu options
     options = ["Home 🏠", "Upload 📤", "Tasks 📝", "Settings ⚙️"]
-    selected_option = st.radio("", options, format_func=lambda x: x.split(' ')[0], key='menu')
 
     # Display the selected item
-    st.write(f"Selected: {selected_option}")
+    selected_option = st.empty()
+    selected_option.write(f"Selected: {options[0]}")
 
     # CSS styling for the menu bar
     st.markdown("""
         <style>
-            .radio span {
-                display: inline-flex;
-                align-items: center;
+            .menu-bar {
+                display: flex;
+                justify-content: center;
+                background-color: #f0f0f0;
+                padding: 10px;
+                border-radius: 5px;
             }
-            .radio span::before {
-                content: "";
-                width: 1em;
-                height: 1em;
-                margin-right: 0.5em;
-                display: inline-block;
-                border-radius: 50%;
-                background-color: #007bff;
-                box-shadow: 0 0 0 3px #fff;
+            .menu-button {
+                margin: 0 10px;
             }
         </style>
     """, unsafe_allow_html=True)
 
+    # Create a horizontal menu bar
+    with st.container():
+        col1, col2, col3, col4 = st.beta_columns(4)
+        if col1.button("Home 🏠"):
+            selected_option.write(f"Selected: {options[0]}")
+        if col2.button("Upload 📤"):
+            selected_option.write(f"Selected: {options[1]}")
+        if col3.button("Tasks 📝"):
+            selected_option.write(f"Selected: {options[2]}")
+        if col4.button("Settings ⚙️"):
+            selected_option.write(f"Selected: {options[3]}")
+
 if __name__ == "__main__":
     main()
-
-
