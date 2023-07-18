@@ -30,7 +30,18 @@ def main():
         </style>
     """, unsafe_allow_html=True)
 
+    # Display content based on the selected option
+    if "Home" in selected_option:
+        st.write("Welcome to the Home Page!")
+    elif "Upload" in selected_option:
+        st.write("You can upload your files here.")
+    elif "Tasks" in selected_option:
+        st.write("These are your pending tasks.")
+    elif "Settings" in selected_option:
+        st.write("Adjust your settings here.")
+
 if __name__ == "__main__":
     main()
+
 
 
