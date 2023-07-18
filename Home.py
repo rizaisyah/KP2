@@ -28,7 +28,7 @@ def main():
 
     # Create a horizontal menu bar
     with st.container():
-        selected_option.write(f"Selected: {selected_option}")
+        st.write(f"Selected: {selected_option}")
 
         if selected_option == "Home 🏠":
             st.write("Welcome to the Home Page!")
@@ -41,3 +41,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
