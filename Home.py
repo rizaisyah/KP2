@@ -16,19 +16,23 @@ def main():
             .menu-bar {
                 display: flex;
                 justify-content: center;
+                background-color: #f0f0f0;
+                padding: 10px 0;
+                border-radius: 5px;
             }
             .menu-button {
-                margin: 10px;
+                margin: 0 10px;
+                cursor: pointer;
             }
         </style>
     """, unsafe_allow_html=True)
 
     # Create a horizontal menu bar
     with st.container():
-        st.write("", options[0])
-        st.write("", options[1])
-        st.write("", options[2])
-        st.write("", options[3])
+        st.write("", options[0], key='home')
+        st.write("", options[1], key='upload')
+        st.write("", options[2], key='tasks')
+        st.write("", options[3], key='settings')
 
     # Handle button clicks
     if st.button(options[0], key='Home'):
