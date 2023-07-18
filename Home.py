@@ -8,4 +8,6 @@ selected = option_menu(
   default_index=0,  # optional
   orientation="horizontal",
         )
-selected
+
+if selected == "home":
+    st.title("Arti")
