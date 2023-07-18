@@ -1,8 +1,6 @@
 # app.py
 from st_pages import Page, show_pages
-
-with st.echo("below"):
-    show_pages(
+show_pages(
         [
             Page("pages/Home.py", "Home", "🏠"),
             Page("pages/Tutorial.py", "Tutorial", ":books:"),
