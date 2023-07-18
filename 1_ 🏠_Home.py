@@ -1,4 +1,8 @@
 import streamlit as st
+st.set_page_config(
+    page_title = "Multipage App",
+    page_icon = "🦸‍♂️",
+)
 
 def page_home():
     st.title('Home Page')
