@@ -7,9 +7,6 @@ def main():
     options = ["Home 🏠", "Upload 📤", "Tasks 📝", "Settings ⚙️"]
     selected_option = st.radio("", options, format_func=lambda x: x.split(' ')[0], key='menu')
 
-    # Display the selected item
-    st.write(f"Selected: {selected_option}")
-
     # CSS styling for the menu bar
     st.markdown("""
         <style>
@@ -40,8 +37,10 @@ def main():
     elif "Settings" in selected_option:
         st.write("Adjust your settings here.")
 
+    # Make the layout horizontal using beta_columns
+    cols = st.beta_columns(len(options))
+    for col, option in zip(cols, options):
+        col.write(option)
+
 if __name__ == "__main__":
     main()
-
-
-
