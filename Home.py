@@ -7,8 +7,7 @@ def main():
     options = ["Home 🏠", "Upload 📤", "Tasks 📝", "Settings ⚙️"]
 
     # Display the selected item
-    selected_option = st.empty()
-    selected_option.write(f"Selected: {options[0]}")
+    selected_option = st.radio("Select an option:", options, index=0, format_func=lambda x: x.split(' ')[0])
 
     # CSS styling for the menu bar
     st.markdown("""
@@ -22,21 +21,23 @@ def main():
             }
             .menu-button {
                 margin: 0 10px;
+                cursor: pointer;
             }
         </style>
     """, unsafe_allow_html=True)
 
     # Create a horizontal menu bar
     with st.container():
-        col1, col2, col3, col4 = st.beta_columns(4)
-        if col1.button("Home 🏠"):
-            selected_option.write(f"Selected: {options[0]}")
-        if col2.button("Upload 📤"):
-            selected_option.write(f"Selected: {options[1]}")
-        if col3.button("Tasks 📝"):
-            selected_option.write(f"Selected: {options[2]}")
-        if col4.button("Settings ⚙️"):
-            selected_option.write(f"Selected: {options[3]}")
+        selected_option.write(f"Selected: {selected_option}")
+
+        if selected_option == "Home 🏠":
+            st.write("Welcome to the Home Page!")
+        elif selected_option == "Upload 📤":
+            st.write("You can upload your files here.")
+        elif selected_option == "Tasks 📝":
+            st.write("These are your pending tasks.")
+        elif selected_option == "Settings ⚙️":
+            st.write("Adjust your settings here.")
 
 if __name__ == "__main__":
     main()
