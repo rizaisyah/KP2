@@ -9,5 +9,5 @@ selected = option_menu(
   orientation="horizontal",
         )
 
-if selected == "home":
+if selected == "Intro":
     st.title("Arti")
