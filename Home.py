@@ -10,16 +10,34 @@ def main():
     selected_option = st.empty()
     selected_option.write(f"Selected: {options[0]}")
 
-    # Create a horizontal menu bar
-    menu_col1, menu_col2, menu_col3, menu_col4 = st.beta_columns(4)
+    # CSS styling for the menu bar
+    st.markdown("""
+        <style>
+            .menu-bar {
+                display: flex;
+                justify-content: center;
+            }
+            .menu-button {
+                margin: 10px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
-    if menu_col1.button("Home 🏠"):
+    # Create a horizontal menu bar
+    with st.container():
+        st.write("", options[0])
+        st.write("", options[1])
+        st.write("", options[2])
+        st.write("", options[3])
+
+    # Handle button clicks
+    if st.button(options[0], key='Home'):
         selected_option.write(f"Selected: {options[0]}")
-    if menu_col2.button("Upload 📤"):
+    if st.button(options[1], key='Upload'):
         selected_option.write(f"Selected: {options[1]}")
-    if menu_col3.button("Tasks 📝"):
+    if st.button(options[2], key='Tasks'):
         selected_option.write(f"Selected: {options[2]}")
-    if menu_col4.button("Settings ⚙️"):
+    if st.button(options[3], key='Settings'):
         selected_option.write(f"Selected: {options[3]}")
 
 if __name__ == "__main__":
